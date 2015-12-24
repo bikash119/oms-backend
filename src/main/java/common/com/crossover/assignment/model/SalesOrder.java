@@ -6,10 +6,19 @@ package com.crossover.assignment.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * @author bikash
  *
  */
+@Entity
+@Table(name="SalesOrder")
 public class SalesOrder implements Serializable{
 	
 	/**
@@ -17,10 +26,15 @@ public class SalesOrder implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@Column(name="id",nullable=false,unique=true)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private String id;
 	
+	@Column(name="customer",nullable=false)
 	private Customer customer;
 	
+	@Column(name="totalPrice",nullable=false)
 	private float totalPrice;
 	
 	private List<OrderLine> lineItems;
