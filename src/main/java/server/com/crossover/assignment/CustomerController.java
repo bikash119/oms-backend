@@ -1,12 +1,12 @@
 package com.crossover.assignment;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -68,7 +68,8 @@ public class CustomerController {
 	}
 	
 	private CustomerDAO getCustomerDao() {
-		return new CustomerDAOImpl();
+		CustomerDAO dao = new CustomerDAOImpl();
+		return dao;
 	}
 	
 }

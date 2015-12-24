@@ -30,7 +30,7 @@ public class Product implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private String id;
 	
-	@Column(name = "product")
+	@Column(name = "description")
 	private String desc;
 	
 	@Column(name="price",nullable=false)

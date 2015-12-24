@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.crossover.assignment.dao.AbstractBusinessDAO;
 import com.crossover.assignment.dao.CustomerDAO;
@@ -17,7 +18,8 @@ import com.crossover.assignment.model.Customer;
  *
  */
 public class CustomerDAOImpl extends AbstractBusinessDAO implements CustomerDAO  {
-
+	
+	
 	/* (non-Javadoc)
 	 * @see com.crossover.assignment.dao.CustomerDAO#save(com.crossover.assignment.model.Customer)
 	 */

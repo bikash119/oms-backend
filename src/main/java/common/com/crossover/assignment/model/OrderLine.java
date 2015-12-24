@@ -33,7 +33,7 @@ public class OrderLine implements Serializable{
 	@Column(name="product", nullable=false)
 	private Product product;
 	
-	@Column(name="order",nullable=false)
+	@Column(name="salesOrder",nullable=false)
 	private SalesOrder order;
 	
 	@Column(name="quantity",nullable=false)
