@@ -23,15 +23,15 @@ public class CustomerDataModel extends ListDataModel
 	@Override
 	public String[][] convertRecordsListToTableModel(List<Object> list)
 	{
-		//TODO by the candidate
-		/*
+		//TODO: by the candidate
+		/* This task is done
 		 * This method use list returned by Services.listCurrentRecords and should convert it to array of rows
 		 * each row is another array of columns of the row
 		 */
-		List<Object> listCurrentRecords = Services.listCurrentRecords(Services.TYPE_CUSTOMER);
+		List<Object> records = Services.listCurrentRecords(Services.TYPE_CUSTOMER);
 		
 		//String[][] sampleData = new String [][]{{"01","Customer 1","+201011121314","23.4"},{"02","Customer 2","+201112131415","1.4"}};
-		String[][] customers = prepareRows(listCurrentRecords);
+		String[][] customers = prepareRows(records);
 		return customers;
 	}
 

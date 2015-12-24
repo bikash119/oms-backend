@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.crossover.assignment.dao.ProductDAO;
 import com.crossover.assignment.model.Product;
 import com.crossover.assignment.service.url.ProductRestURIConstants;
 
@@ -22,40 +23,49 @@ import com.crossover.assignment.service.url.ProductRestURIConstants;
  *
  */
 @Controller
-public class ProductController {
+public class ProductController extends DefaultController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 	
 	@RequestMapping(value=ProductRestURIConstants.PRODUCT_DUMMY,method= RequestMethod.GET)
 	public @ResponseBody Product getDummyProduct(){
-		logger.info("");
+		logger.info("get dummy product");
 		return null;
 	}
 	
 	@RequestMapping(value=ProductRestURIConstants.GET_PRODUCT_BY_ID,method=RequestMethod.GET)
-	public @ResponseBody Product getProductById(@PathVariable("id") int custId){
-		logger.info("");
-		return null;
+	public @ResponseBody Product getProductById(@PathVariable("id") String productId){
+		logger.info("get product by id :"+productId);
+		ProductDAO productDAO = getProductDAO();
+		
+		return productDAO.fetchById(productId);
 		
 	}
 	
 	//TODO implement pagination
 	@RequestMapping(value = ProductRestURIConstants.GET_ALL_PRODUCT,method=RequestMethod.GET)
 	public @ResponseBody List<Product> getProducts(){
-		logger.info("");
-		return null;
+		logger.info("get all products");
+		ProductDAO productDAO = getProductDAO();
+		return productDAO.fetchAll();
 	}
 	
 	@RequestMapping(value=ProductRestURIConstants.CREATE_PRODUCT,method=RequestMethod.POST)
 	public @ResponseBody Product createProduct(@RequestBody Product product){
-		logger.info("");
-		return null;
+		logger.info("create product");
+		ProductDAO productDAO = getProductDAO();
+		return productDAO.save(product);
 	}
 	
 	@RequestMapping(value=ProductRestURIConstants.UPDATE_PRODUCT,method=RequestMethod.POST)
-	public @ResponseBody Product updateCustomer(@RequestBody Product product,@PathVariable("id") int id){
-		logger.info("");
-		return null;
+	public @ResponseBody Product updateProduct(@RequestBody Product product,@PathVariable("id") String id){
+		logger.info("update product");
+		ProductDAO productDAO = getProductDAO();
+		return productDAO.update(id, product);
+	}
+	
+	private ProductDAO getProductDAO(){
+		return context.getBean(ProductDAO.class);
 	}
 	
 

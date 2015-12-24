@@ -6,8 +6,6 @@ package com.crossover.assignment.dao.impl;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.crossover.assignment.dao.AbstractBusinessDAO;
 import com.crossover.assignment.dao.CustomerDAO;
@@ -25,8 +23,8 @@ public class CustomerDAOImpl extends AbstractBusinessDAO implements CustomerDAO 
 	 */
 	@Override
 	public Customer save(Customer customer) {
-		// TODO Auto-generated method stub
-		return null;
+		this.getSession().persist(customer);
+		return customer;
 	}
 
 	/* (non-Javadoc)
@@ -35,9 +33,7 @@ public class CustomerDAOImpl extends AbstractBusinessDAO implements CustomerDAO 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Customer> fetchAll() {
-		SessionFactory factory = this.getSessionFactory();
-		Session session = factory.openSession();
-		List<Customer> customers = session.createQuery("from customer").list();
+		List<Customer> customers = this.getSession().createQuery("from Customer").list();
 		return customers;
 	}
 
@@ -46,17 +42,20 @@ public class CustomerDAOImpl extends AbstractBusinessDAO implements CustomerDAO 
 	 */
 	@Override
 	public Customer fetchById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		Customer customer = (Customer)this.getSession().load(Customer.class, id);
+		return customer;
 	}
 
 	/* (non-Javadoc)
 	 * @see com.crossover.assignment.dao.CustomerDAO#delete(java.lang.String)
 	 */
 	@Override
-	public Customer delete(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public void delete(String id) {
+		Session session = this.getSession();
+		Object load = session.load(Customer.class, id);
+		if(load != null){
+			session.delete(load);
+		}
 	}
 
 	/* (non-Javadoc)
@@ -64,8 +63,8 @@ public class CustomerDAOImpl extends AbstractBusinessDAO implements CustomerDAO 
 	 */
 	@Override
 	public Customer update(String id, Customer customer) {
-		// TODO Auto-generated method stub
-		return null;
+		this.getSession().update(id, customer);
+		return customer;
 	}
 
 }

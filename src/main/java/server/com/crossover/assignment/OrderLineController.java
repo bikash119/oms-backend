@@ -22,7 +22,7 @@ import com.crossover.assignment.service.url.OrderLineItemsRestURIConstants;
  *
  */
 @Controller
-public class OrderLineController {
+public class OrderLineController extends DefaultController {
 
 	private static final Logger logger = LoggerFactory.getLogger(OrderLineController.class);
 

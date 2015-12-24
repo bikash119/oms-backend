@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.crossover.assignment.dao.CustomerDAO;
-import com.crossover.assignment.dao.impl.CustomerDAOImpl;
 import com.crossover.assignment.model.Customer;
 import com.crossover.assignment.service.url.CustomerRestURIConstants;
 
@@ -23,9 +21,10 @@ import com.crossover.assignment.service.url.CustomerRestURIConstants;
  * Handles requests for the application home page.
  */
 @Controller
-public class CustomerController {
+public class CustomerController extends DefaultController{
 	
 	private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
+	
 	
 	Map<Integer, Customer> empData = new HashMap<Integer, Customer>();
 	@RequestMapping(value=CustomerRestURIConstants.CUSTOMER_DUMMY,method= RequestMethod.GET)
@@ -40,9 +39,11 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value=CustomerRestURIConstants.GET_CUSTOMER_BY_ID,method=RequestMethod.GET)
-	public @ResponseBody Customer getCustomerById(@PathVariable("id") int custId){
-		logger.info("get customer by id "+ custId);
-		return null;
+	public @ResponseBody Customer getCustomerById(@PathVariable("id") String custId){
+		logger.info("get customer by id : " + custId);
+		CustomerDAO customerDao = getCustomerDao();
+		Customer customer = customerDao.fetchById(custId);
+		return customer;
 		
 	}
 	
@@ -58,17 +59,21 @@ public class CustomerController {
 	@RequestMapping(value=CustomerRestURIConstants.CREATE_CUSTOMER,method=RequestMethod.POST)
 	public @ResponseBody Customer createCustomer(@RequestBody Customer customer){
 		logger.info("create customer");
-		return null;
+		CustomerDAO customerDao = getCustomerDao();
+		customerDao.save(customer);
+		return customer;
 	}
 	
 	@RequestMapping(value=CustomerRestURIConstants.UPDATE_CUSTOMER,method=RequestMethod.POST)
-	public @ResponseBody Customer updateCustomer(@RequestBody Customer customer,@PathVariable("id") int id){
+	public @ResponseBody Customer updateCustomer(@RequestBody Customer customer,@PathVariable("id") String id){
 		logger.info("update customer : "+id);
-		return null;
+		CustomerDAO customerDao = getCustomerDao();
+		Customer updatedCustomer = customerDao.update(id, customer);
+		return updatedCustomer;
 	}
 	
 	private CustomerDAO getCustomerDao() {
-		CustomerDAO dao = new CustomerDAOImpl();
+		CustomerDAO dao = context.getBean(CustomerDAO.class);
 		return dao;
 	}
 	

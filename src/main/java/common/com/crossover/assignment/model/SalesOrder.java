@@ -4,13 +4,17 @@
 package com.crossover.assignment.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -37,7 +41,7 @@ public class SalesOrder implements Serializable{
 	@Column(name="totalPrice",nullable=false)
 	private float totalPrice;
 	
-	private List<OrderLine> lineItems;
+	private Set<OrderLine> lineItems = new HashSet<OrderLine>();
 
 	public Customer getCustomer() {
 		return customer;
@@ -55,20 +59,21 @@ public class SalesOrder implements Serializable{
 		this.totalPrice = totalPrice;
 	}
 
-	public List<OrderLine> getLineItems() {
-		return lineItems;
-	}
-
-	public void setLineItems(List<OrderLine> lineItems) {
-		this.lineItems = lineItems;
-	}
-
 	public String getId() {
 		return id;
 	}
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY,mappedBy="orderLine")
+	public Set<OrderLine> getLineItems() {
+		return lineItems;
+	}
+
+	public void setLineItems(Set<OrderLine> lineItems) {
+		this.lineItems = lineItems;
 	}
 
 }

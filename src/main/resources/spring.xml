@@ -22,6 +22,8 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>com.crossover.assignment.model.Customer</value>
+				<value>com.crossover.assignment.model.Product</value>
+				<value>com.crossover.assignment.model.SalesOrder</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -35,6 +37,12 @@
 
 
 	<bean id="customerDao" class="com.crossover.assignment.dao.impl.CustomerDAOImpl">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+	<bean id="productDao" class="com.crossover.assignment.dao.impl.ProductDAOImpl">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+	<bean id="salesOrderDao" class="com.crossover.assignment.dao.impl.SalesOrderDAOImpl">
 		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</bean>
 </beans>

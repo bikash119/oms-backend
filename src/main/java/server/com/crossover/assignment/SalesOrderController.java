@@ -22,7 +22,7 @@ import com.crossover.assignment.service.url.SalesOrderRestURIConstants;
  *
  */
 @Controller
-public class SalesOrderController {
+public class SalesOrderController extends DefaultController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(SalesOrderController.class);
 	
@@ -58,5 +58,4 @@ public class SalesOrderController {
 		return null;
 	}
 	
-
 }
