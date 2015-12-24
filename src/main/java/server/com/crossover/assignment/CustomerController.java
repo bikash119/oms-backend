@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.crossover.assignment.dao.CustomerDAO;
+import com.crossover.assignment.dao.impl.CustomerDAOImpl;
 import com.crossover.assignment.model.Customer;
 import com.crossover.assignment.service.url.CustomerRestURIConstants;
 
@@ -48,13 +50,8 @@ public class CustomerController {
 	@RequestMapping(value = CustomerRestURIConstants.GET_ALL_CUSTOMER,method=RequestMethod.GET)
 	public @ResponseBody List<Customer> getCustomers(){
 		logger.info("get all customers");
-		List<Customer> customers = new ArrayList<Customer>();
-		Customer cust = new Customer();
-		cust.setId("01");
-		cust.setCurrentCredit(23.4f);
-		cust.setName("Customer 1");
-		cust.setPhoneNumber("+201011121314");
-		customers.add(cust);
+		CustomerDAO dao = getCustomerDao();
+		List<Customer> customers = dao.fetchAll();
 		return customers;
 	}
 	
@@ -68,6 +65,10 @@ public class CustomerController {
 	public @ResponseBody Customer updateCustomer(@RequestBody Customer customer,@PathVariable("id") int id){
 		logger.info("update customer : "+id);
 		return null;
+	}
+	
+	private CustomerDAO getCustomerDao() {
+		return new CustomerDAOImpl();
 	}
 	
 }
