@@ -17,21 +17,13 @@ public class SalesOrder implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private long id;
+	private String id;
 	
 	private Customer customer;
 	
 	private float totalPrice;
 	
 	private List<OrderLine> lineItems;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public Customer getCustomer() {
 		return customer;
@@ -55,6 +47,14 @@ public class SalesOrder implements Serializable{
 
 	public void setLineItems(List<OrderLine> lineItems) {
 		this.lineItems = lineItems;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }

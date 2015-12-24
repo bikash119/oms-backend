@@ -13,21 +13,13 @@ public class Customer implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private int id;
+	private String id;
 	
 	private String name;
 	
 	private String phoneNumber;
 	
 	private float currentCredit;
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;
@@ -51,6 +43,14 @@ public class Customer implements Serializable{
 
 	public void setCurrentCredit(float currentCredit) {
 		this.currentCredit = currentCredit;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }

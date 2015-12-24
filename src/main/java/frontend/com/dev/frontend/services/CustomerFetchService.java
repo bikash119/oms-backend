@@ -26,7 +26,7 @@ public class CustomerFetchService implements FetchService<Customer> {
 				List.class);
 		for (LinkedHashMap map : response) {
 			Customer customer = new Customer();
-			customer.setId(Integer.parseInt(map.get("id").toString()));
+			customer.setId(map.get("id").toString());
 			customer.setCurrentCredit(Float.parseFloat((map.get("currentCredit").toString())));
 			customer.setName(map.get("name").toString());
 			customer.setPhoneNumber(map.get("phoneNumber").toString());

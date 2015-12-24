@@ -30,7 +30,7 @@ public class CustomerController {
 	public @ResponseBody Customer getDummyCustomer(){
 		logger.info("Get dummy customer");
 		Customer cust = new Customer();
-		cust.setId(01);
+		cust.setId("01");
 		cust.setCurrentCredit(23.4f);
 		cust.setName("Customer 1");
 		cust.setPhoneNumber("+201011121314");
@@ -50,7 +50,7 @@ public class CustomerController {
 		logger.info("get all customers");
 		List<Customer> customers = new ArrayList<Customer>();
 		Customer cust = new Customer();
-		cust.setId(01);
+		cust.setId("01");
 		cust.setCurrentCredit(23.4f);
 		cust.setName("Customer 1");
 		cust.setPhoneNumber("+201011121314");

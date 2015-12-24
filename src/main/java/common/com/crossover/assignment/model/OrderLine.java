@@ -16,7 +16,7 @@ public class OrderLine implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private long id;
+	private String id;
 	
 	private Product product;
 	
@@ -25,14 +25,6 @@ public class OrderLine implements Serializable{
 	private int productQuantity;
 	
 	private long productPrice;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public Product getProduct() {
 		return product;
@@ -64,6 +56,14 @@ public class OrderLine implements Serializable{
 
 	public void setProductPrice(long productPrice) {
 		this.productPrice = productPrice;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }
