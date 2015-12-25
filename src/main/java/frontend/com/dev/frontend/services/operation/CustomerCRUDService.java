@@ -1,0 +1,74 @@
+/**
+ * 
+ */
+package com.dev.frontend.services.operation;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.client.RestTemplate;
+
+import com.crossover.assignment.model.Customer;
+import com.crossover.assignment.service.url.CustomerRestURIConstants;
+import com.dev.frontend.services.operation.exception.CustomerCRUDServiceException;
+
+/**
+ * @author bikash
+ *
+ */
+public class CustomerCRUDService implements CRUDService<Customer,CustomerCRUDServiceException> {
+	
+	private static final Logger logger = LoggerFactory.getLogger(CustomerCRUDService.class);
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	public List<Customer> fetchAll() throws CustomerCRUDServiceException {
+		RestTemplate restTemplate = new RestTemplate();
+		List<Customer> customers = new ArrayList<Customer>();
+		
+		List<LinkedHashMap> response = restTemplate.getForObject(SERVER_URI + CustomerRestURIConstants.GET_ALL_CUSTOMER,
+				List.class);
+		for (LinkedHashMap map : response) {
+			Customer customer = new Customer();
+			customer.setId(Long.parseLong(map.get("id").toString()));
+			customer.setCurrentCredit(Float.parseFloat((map.get("currentCredit").toString())));
+			customer.setName(map.get("name").toString());
+			customer.setPhoneNumber(map.get("phoneNumber").toString());
+			customers.add(customer);
+		}
+		return customers;
+	}
+
+	@Override
+	public Customer fetchById(String id) throws CustomerCRUDServiceException {
+		RestTemplate restTemplate = new RestTemplate();
+		Customer customer = restTemplate.getForObject(SERVER_URI + CustomerRestURIConstants.GET_CUSTOMER_BY_ID + id, Customer.class);
+		return customer;
+	}
+
+	@Override
+	public Customer create(Customer entity) throws CustomerCRUDServiceException {
+		RestTemplate restTemplate = new RestTemplate();
+		Customer customer = restTemplate.postForObject(SERVER_URI + CustomerRestURIConstants.CREATE_CUSTOMER, entity,
+				Customer.class);
+		return customer;
+	}
+
+	@Override
+	public Customer update(Customer entity, Long id) throws CustomerCRUDServiceException {
+		RestTemplate restTemplate = new RestTemplate();
+		Customer customer = restTemplate.postForObject(SERVER_URI+CustomerRestURIConstants.UPDATE_CUSTOMER+id, entity, Customer.class);
+		return customer;
+	}
+
+	@Override
+	public boolean delete(Long id) throws CustomerCRUDServiceException {
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.delete(SERVER_URI+CustomerRestURIConstants.DELETLE_CUSTOMER+id);
+		return false;
+	}
+
+}

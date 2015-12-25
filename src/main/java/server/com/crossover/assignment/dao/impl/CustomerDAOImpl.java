@@ -3,6 +3,7 @@
  */
 package com.crossover.assignment.dao.impl;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -24,7 +25,7 @@ public class CustomerDAOImpl extends AbstractBusinessDAO implements CustomerDAO 
 	 */
 	@Override
 	public Customer save(Customer customer) {
-		this.getSession().persist(customer);
+		Serializable savedCustomer = this.getSession().save(customer);
 		return customer;
 	}
 

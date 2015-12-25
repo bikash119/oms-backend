@@ -31,7 +31,7 @@ public class CustomerController extends DefaultController{
 	public @ResponseBody Customer getDummyCustomer(){
 		logger.info("Get dummy customer");
 		Customer cust = new Customer();
-		cust.setId(01);
+		cust.setId(01L);
 		cust.setCurrentCredit(23.4f);
 		cust.setName("Customer 1");
 		cust.setPhoneNumber("+201011121314");

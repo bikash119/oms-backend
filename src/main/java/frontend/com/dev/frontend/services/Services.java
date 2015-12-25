@@ -7,6 +7,13 @@ import com.crossover.assignment.model.Customer;
 import com.crossover.assignment.model.Product;
 import com.crossover.assignment.model.SalesOrder;
 import com.dev.frontend.panels.ComboBoxItem;
+import com.dev.frontend.services.operation.CRUDService;
+import com.dev.frontend.services.operation.CustomerCRUDService;
+import com.dev.frontend.services.operation.ProductCRUDService;
+import com.dev.frontend.services.operation.SalesOrderCRUDService;
+import com.dev.frontend.services.operation.exception.CustomerCRUDServiceException;
+import com.dev.frontend.services.operation.exception.ProductCRUDServiceException;
+import com.dev.frontend.services.operation.exception.SalesOrderCRUDServiceException;
 
 public class Services {
 	public static final int TYPE_PRODUCT = 1;
@@ -23,13 +30,13 @@ public class Services {
 		 */
 		switch (objectType) {
 		case 1:
-			Product products = createProductRecords(object);
+			Product products = upsertProductRecords(object);
 			break;
 		case 2:
-			Customer customers = createCustomerRecords(object);
+			Customer customers = upsertCustomerRecords(object);
 			break;
 		case 3:
-			SalesOrder orders = createSalesOrderRecords(object);
+			SalesOrder orders = upsertSalesOrderRecords(object);
 			break;
 		default:
 			break;
@@ -37,18 +44,52 @@ public class Services {
 		return null;
 	}
 
-	private static SalesOrder createSalesOrderRecords(Object obj) {
-		CRUDService<SalesOrder> orderService = new SalesOrderCRUDService();
-		SalesOrder order = orderService.create((SalesOrder)obj);
-		return order;
+	private static SalesOrder upsertSalesOrderRecords(Object obj) {
+		CRUDService<SalesOrder, SalesOrderCRUDServiceException> orderService = new SalesOrderCRUDService();
+		SalesOrder salesOrder = (SalesOrder) obj;
+		try {
+			if (salesOrder.getId() != null) {
+				orderService.update(salesOrder, salesOrder.getId());
+			} else {
+				salesOrder = orderService.create(salesOrder);
+			}
+		} catch (SalesOrderCRUDServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return salesOrder;
 	}
 
-	private static Customer createCustomerRecords(Object obj) {
-		return null;
+	private static Customer upsertCustomerRecords(Object obj) {
+		CRUDService<Customer, CustomerCRUDServiceException> customerService = new CustomerCRUDService();
+		Customer customer = (Customer) obj;
+		try {
+			if (customer.getId() != null) {
+				customer = customerService.update(customer, customer.getId());
+			} else {
+				customer = customerService.create(customer);
+			}
+		} catch (CustomerCRUDServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return customer;
 	}
 
-	private static Product createProductRecords(Object obj) {
-		return null;
+	private static Product upsertProductRecords(Object obj) {
+		CRUDService<Product, ProductCRUDServiceException> productService = new ProductCRUDService();
+		Product product = (Product) obj;
+		try {
+			if (product.getId() != null) {
+				product = productService.update(product, product.getId());
+			} else {
+				product = productService.create(product);
+			}
+		} catch (ProductCRUDServiceException e) {
+			e.printStackTrace();
+		}
+		return product;
 	}
 
 	public static Object readRecordByCode(String code, int objectType) {
@@ -119,38 +160,73 @@ public class Services {
 	}
 
 	private static List<Product> fetchProductRecords() {
-		CRUDService<Product> productFetchService = new ProductCRUDService();
-		List<Product> products = productFetchService.fetchAll();
+		CRUDService<Product,ProductCRUDServiceException> productFetchService = new ProductCRUDService();
+		List<Product> products = null;
+		try {
+			products = productFetchService.fetchAll();
+		} catch (ProductCRUDServiceException e) {
+			e.printStackTrace();
+		}
 		return products;
 	}
 
 	private static List<Customer> fetchCustomerRecords() {
-		CRUDService<Customer> customerFetchService = new CustomerCRUDService();
-		List<Customer> customers = customerFetchService.fetchAll();
+		CRUDService<Customer,CustomerCRUDServiceException> customerFetchService = new CustomerCRUDService();
+		List<Customer> customers = null;
+		try {
+			customers = customerFetchService.fetchAll();
+		} catch (CustomerCRUDServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return customers;
 	}
 
 	private static List<SalesOrder> fetchSalesOrderRecords() {
-		CRUDService<SalesOrder> salesOrderFetchService = new SalesOrderCRUDService();
-		List<SalesOrder> salesOrders = salesOrderFetchService.fetchAll();
+		CRUDService<SalesOrder,SalesOrderCRUDServiceException> salesOrderFetchService = new SalesOrderCRUDService();
+		List<SalesOrder> salesOrders = null;
+		try {
+			salesOrders = salesOrderFetchService.fetchAll();
+		} catch (SalesOrderCRUDServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return salesOrders;
 	}
 	
 	private static Product fetchProductRecordByProductId(String productId) {
-		CRUDService<Product> productFetchService = new ProductCRUDService();
-		Product product = productFetchService.fetchById(productId);
+		CRUDService<Product,ProductCRUDServiceException> productFetchService = new ProductCRUDService();
+		Product product = null;
+		try {
+			product = productFetchService.fetchById(productId);
+		} catch (ProductCRUDServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return product;
 	}
 
 	private static Customer fetchCustomerRecordByCustomerId(String customerId) {
-		CRUDService<Customer> customerFetchService = new CustomerCRUDService();
-		Customer customer = customerFetchService.fetchById(customerId);
+		CRUDService<Customer,CustomerCRUDServiceException> customerFetchService = new CustomerCRUDService();
+		Customer customer = null;
+		try {
+			customer = customerFetchService.fetchById(customerId);
+		} catch (CustomerCRUDServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return customer;
 	}
 
 	private static SalesOrder fetchSalesOrderRecordBySalesOrderId(String salesOrderId) {
-		CRUDService<SalesOrder> salesOrderFetchService = new SalesOrderCRUDService();
-		SalesOrder salesOrder = salesOrderFetchService.fetchById(salesOrderId);
+		CRUDService<SalesOrder,SalesOrderCRUDServiceException> salesOrderFetchService = new SalesOrderCRUDService();
+		SalesOrder salesOrder = null;
+		try {
+			salesOrder = salesOrderFetchService.fetchById(salesOrderId);
+		} catch (SalesOrderCRUDServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return salesOrder;
 	}
 
@@ -212,8 +288,13 @@ public class Services {
 	}
 
 	private static Product fetchProductByCode(String productCode) {
-		CRUDService<Product> productFetchService = new ProductCRUDService();
-		Product product = productFetchService.fetchById(productCode);
+		CRUDService<Product,ProductCRUDServiceException> productFetchService = new ProductCRUDService();
+		Product product = null;
+		try {
+			product = productFetchService.fetchById(productCode);
+		} catch (ProductCRUDServiceException e) {
+			e.printStackTrace();
+		}
 		return product;
 	}
 }

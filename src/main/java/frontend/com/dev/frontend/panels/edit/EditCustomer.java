@@ -7,6 +7,7 @@ import java.awt.Insets;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import com.crossover.assignment.model.Customer;
 import com.dev.frontend.services.Services;
 
 public class EditCustomer extends EditContentPanel 
@@ -147,7 +148,11 @@ public class EditCustomer extends EditContentPanel
 		 * This method collect values from screen widgets and convert them to object of your type
 		 * This object will be used as a parameter of method Services.save
 		 */
-		return null;
+		Customer customer = new Customer();
+		customer.setName(txtName.getText());
+		customer.setPhoneNumber(txtPhone1.getText());
+		customer.setCurrentCredit(Float.parseFloat(txtCreditLimit.getText()));
+		return customer;
 	}
 
 	@Override

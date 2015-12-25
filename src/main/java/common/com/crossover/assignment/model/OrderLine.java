@@ -31,7 +31,7 @@ public class OrderLine implements Serializable{
 	@Id
 	@Column(name="id",nullable=false,unique=true)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	
 	@Column(name="product", nullable=false)
 	private Product product;

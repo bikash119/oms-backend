@@ -7,6 +7,7 @@ import java.awt.Insets;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import com.crossover.assignment.model.Product;
 import com.dev.frontend.services.Services;
 
 public class EditProduct extends EditContentPanel
@@ -95,7 +96,12 @@ public class EditProduct extends EditContentPanel
 		 * This method collect values from screen widgets and convert them to object of your type
 		 * This object will be used as a parameter of method Services.save
 		 */
-		return null;
+		
+		Product product = new Product();
+		product.setDesc(txtDescription.getText());
+		product.setQuantity(Long.parseLong(txtQuantity.getText()));
+		product.setPrice(Float.parseFloat(txtPrice.getText()));
+		return product;
 	}
 
 	public int getObjectType()

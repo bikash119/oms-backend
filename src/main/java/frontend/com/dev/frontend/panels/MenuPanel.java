@@ -28,7 +28,7 @@ public class MenuPanel extends JPanel {
 			}
 		});
 		add(btnAddCustomer);
-		btnAddCustomer.setBounds(new Rectangle(50, 50, 30, 20));
+		//btnAddCustomer.setBounds(new Rectangle(50, 50, 30, 20));
 
 		JButton btnAddProduct = new JButton("Add Product");
 		btnAddProduct.addActionListener(new ActionListener() {
