@@ -20,8 +20,8 @@ import com.dev.frontend.services.operation.exception.CustomerCRUDServiceExceptio
  * @author bikash
  *
  */
-public class CustomerCRUDService implements CRUDService<Customer,CustomerCRUDServiceException> {
-	
+public class CustomerCRUDService implements CRUDService<Customer, CustomerCRUDServiceException> {
+
 	private static final Logger logger = LoggerFactory.getLogger(CustomerCRUDService.class);
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -29,39 +29,63 @@ public class CustomerCRUDService implements CRUDService<Customer,CustomerCRUDSer
 	public List<Customer> fetchAll() throws CustomerCRUDServiceException {
 		RestTemplate restTemplate = new RestTemplate();
 		List<Customer> customers = new ArrayList<Customer>();
-		
-		List<LinkedHashMap> response = restTemplate.getForObject(SERVER_URI + CustomerRestURIConstants.GET_ALL_CUSTOMER,
-				List.class);
-		for (LinkedHashMap map : response) {
-			Customer customer = new Customer();
-			customer.setId(Long.parseLong(map.get("id").toString()));
-			customer.setCurrentCredit(Float.parseFloat((map.get("currentCredit").toString())));
-			customer.setName(map.get("name").toString());
-			customer.setPhoneNumber1(map.get("phoneNumber1").toString());
-			customers.add(customer);
+		try {
+			List<LinkedHashMap> response = restTemplate.getForObject(SERVER_URI + CustomerRestURIConstants.GET_ALL_CUSTOMER,
+					List.class);
+			for (LinkedHashMap map : response) {
+				Customer customer = new Customer();
+				customer.setId(Long.parseLong(map.get("id").toString()));
+				customer.setCurrentCredit(Float.parseFloat((map.get("currentCredit").toString())));
+				customer.setName(map.get("name").toString());
+				customer.setPhoneNumber1(map.get("phoneNumber1").toString());
+				customers.add(customer);
+			}
+			
+		} catch (RestClientException e) {
+			throw new CustomerCRUDServiceException(e.getCause());
+		}catch (Exception e) {
+			throw new CustomerCRUDServiceException(e.getCause());
 		}
+
 		return customers;
 	}
 
 	@Override
 	public Customer fetchById(String id) throws CustomerCRUDServiceException {
 		RestTemplate restTemplate = new RestTemplate();
-		Customer customer = restTemplate.getForObject(SERVER_URI + "/rest/customer/" + id, Customer.class);
+		Customer customer = null;
+		try {
+
+			customer = restTemplate.getForObject(SERVER_URI + "/rest/customer/" + id, Customer.class);
+		} catch (Exception e) {
+			throw new CustomerCRUDServiceException(e.getCause());
+		}
 		return customer;
 	}
 
 	@Override
 	public Customer create(Customer entity) throws CustomerCRUDServiceException {
 		RestTemplate restTemplate = new RestTemplate();
-		Customer customer = restTemplate.postForObject(SERVER_URI + CustomerRestURIConstants.CREATE_CUSTOMER, entity,
-				Customer.class);
+		Customer customer = null;
+		try {
+			customer = restTemplate.postForObject(SERVER_URI + CustomerRestURIConstants.CREATE_CUSTOMER, entity,
+					Customer.class);
+		} catch (RestClientException e) {
+			throw new CustomerCRUDServiceException(e.getCause());
+		}
 		return customer;
 	}
 
 	@Override
 	public Customer update(Customer entity, Long id) throws CustomerCRUDServiceException {
 		RestTemplate restTemplate = new RestTemplate();
-		Customer customer = restTemplate.postForObject(SERVER_URI+"/rest/customer/update/"+id, entity, Customer.class);
+		Customer customer = null;
+		try {
+			customer = restTemplate.postForObject(SERVER_URI + "/rest/customer/update/" + id, entity, Customer.class);
+
+		} catch (RestClientException e) {
+			throw new CustomerCRUDServiceException(e.getCause());
+		}
 		return customer;
 	}
 
@@ -70,12 +94,12 @@ public class CustomerCRUDService implements CRUDService<Customer,CustomerCRUDSer
 		RestTemplate restTemplate = new RestTemplate();
 		boolean isDeleted = true;
 		try {
-			restTemplate.delete(SERVER_URI+"/rest/customer/delete/"+id);
+			restTemplate.delete(SERVER_URI + "/rest/customer/delete/" + id);
 		} catch (RestClientException e) {
 			isDeleted = false;
 			throw new CustomerCRUDServiceException(e.getCause());
 		}
-		
+
 		return isDeleted;
 	}
 
