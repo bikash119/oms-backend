@@ -120,13 +120,59 @@ public class Services {
 
 	public static boolean deleteRecordByCode(String code, int objectType) {
 		// TODO by the candidate
-		/*
+		/* Bikash :- IMPL done
 		 * This method is called when you click delete button on an edit view
 		 * the code parameter is the code of (Customer - PRoduct ) or order
 		 * number of Sales Order and the type is identifier of the object type
 		 * and may be TYPE_PRODUCT , TYPE_CUSTOMER or TYPE_SALESORDER
 		 */
+		boolean isDeleted = false;
+		switch (objectType) {
+		case 1:
+			isDeleted = deleteProductById(code);
+			break;
+		case 2:
+			isDeleted = deleteCustomerById(code);
+			break;
+		case 3:
+			isDeleted = deleteSalesOrderById(code);
+			break;
+		default:
+			break;
+		}
+
 		return true;
+	}
+
+	private static boolean deleteSalesOrderById(String salesOrderId) {
+		CRUDService<SalesOrder,SalesOrderCRUDServiceException> salesOrderCrudServce = new SalesOrderCRUDService();
+		boolean isDeleted = false;
+		try {
+			isDeleted = salesOrderCrudServce.delete(salesOrderId);
+		} catch (SalesOrderCRUDServiceException e) {
+		}
+		return isDeleted;
+	}
+
+	private static boolean deleteCustomerById(String customerId) {
+		CRUDService<Customer,CustomerCRUDServiceException> customerCrudService = new CustomerCRUDService();
+		boolean isDeleted = false;
+		try {
+			isDeleted = customerCrudService.delete(customerId);
+		} catch (CustomerCRUDServiceException e) {
+			e.printStackTrace();
+		}
+		return isDeleted;
+	}
+
+	private static boolean deleteProductById(String productId) {
+		CRUDService<Product,ProductCRUDServiceException> productCrudService = new ProductCRUDService();
+		boolean isDeleted = false;
+		try {
+			isDeleted = productCrudService.delete(productId);
+		} catch (ProductCRUDServiceException e) {
+		}
+		return isDeleted;
 	}
 
 	public static List<Object> listCurrentRecords(int objectType) {

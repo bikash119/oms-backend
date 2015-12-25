@@ -64,7 +64,7 @@ public class ProductCRUDService implements CRUDService<Product,ProductCRUDServic
 	}
 
 	@Override
-	public boolean delete(Long id) throws ProductCRUDServiceException {
+	public boolean delete(String id) throws ProductCRUDServiceException {
 		RestTemplate restTemplate = new RestTemplate();
 		restTemplate.delete(SERVER_URI+ProductRestURIConstants.DELETLE_PRODUCT);
 		return false;

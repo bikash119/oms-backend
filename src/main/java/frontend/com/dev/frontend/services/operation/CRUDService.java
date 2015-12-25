@@ -23,7 +23,7 @@ public interface CRUDService<T,E extends CRUDServiceException> {
 	
 	T update(T entity,Long id) throws E;
 	
-	boolean delete(Long id) throws E;
+	boolean delete(String id) throws E;
 	
 
 }

@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.crossover.assignment.model.Customer;
@@ -65,10 +66,17 @@ public class CustomerCRUDService implements CRUDService<Customer,CustomerCRUDSer
 	}
 
 	@Override
-	public boolean delete(Long id) throws CustomerCRUDServiceException {
+	public boolean delete(String id) throws CustomerCRUDServiceException {
 		RestTemplate restTemplate = new RestTemplate();
-		restTemplate.delete(SERVER_URI+CustomerRestURIConstants.DELETLE_CUSTOMER+id);
-		return false;
+		boolean isDeleted = true;
+		try {
+			restTemplate.delete(SERVER_URI+CustomerRestURIConstants.DELETLE_CUSTOMER+id);
+		} catch (RestClientException e) {
+			isDeleted = false;
+			throw new CustomerCRUDServiceException(e.getCause());
+		}
+		
+		return isDeleted;
 	}
 
 }

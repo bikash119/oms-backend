@@ -63,7 +63,7 @@ public class SalesOrderCRUDService implements CRUDService<SalesOrder,SalesOrderC
 	}
 
 	@Override
-	public boolean delete(Long id) throws SalesOrderCRUDServiceException{
+	public boolean delete(String id) throws SalesOrderCRUDServiceException{
 		RestTemplate restTemplate = new RestTemplate();
 		restTemplate.delete(SERVER_URI+SalesOrderRestURIConstants.DELETLE_SALES+id);
 		return false;
