@@ -65,6 +65,12 @@ public class ProductController extends DefaultController {
 		return productDAO.update(id, product);
 	}
 	
+	@RequestMapping(value=ProductRestURIConstants.DELETLE_PRODUCT,method=RequestMethod.DELETE)
+	public @ResponseBody void deleteProductById(@PathVariable("id") String id){
+		ProductDAO productDAO = getProductDAO();
+		productDAO.delete(id);
+	}
+	
 	private ProductDAO getProductDAO(){
 		return context.getBean(ProductDAO.class);
 	}

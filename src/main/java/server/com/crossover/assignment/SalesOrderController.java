@@ -36,7 +36,9 @@ public class SalesOrderController extends DefaultController {
 	@RequestMapping(value=SalesOrderRestURIConstants.GET_SALES_BY_ID,method=RequestMethod.GET)
 	public @ResponseBody SalesOrder getSalesOrderById(@PathVariable("id") String orderId){
 		logger.info("get sales order by id :"+orderId);
-		return null;
+		SalesOrderDAO salesOrderDao = getSalesOrderDao();
+		SalesOrder salesOrder = salesOrderDao.fetchById(orderId);
+		return salesOrder;
 		
 	}
 	
@@ -44,7 +46,9 @@ public class SalesOrderController extends DefaultController {
 	@RequestMapping(value = SalesOrderRestURIConstants.GET_ALL_SALES,method=RequestMethod.GET)
 	public @ResponseBody List<SalesOrder> getOrders(){
 		logger.info("get all orders");
-		return null;
+		SalesOrderDAO salesOrderDao = getSalesOrderDao();
+		List<SalesOrder> salesOrders = salesOrderDao.fetchAll();
+		return salesOrders;
 	}
 	
 	@RequestMapping(value=SalesOrderRestURIConstants.CREATE_SALES,method=RequestMethod.POST)
@@ -58,7 +62,15 @@ public class SalesOrderController extends DefaultController {
 	@RequestMapping(value=SalesOrderRestURIConstants.UPDATE_SALES,method=RequestMethod.POST)
 	public @ResponseBody SalesOrder updateSalesOrder(@RequestBody SalesOrder salesOrder,@PathVariable("id") String id){
 		logger.info("update sales order");
-		return null;
+		SalesOrderDAO salesOrderDao = getSalesOrderDao();
+		SalesOrder updatedSalesOrder = salesOrderDao.update(id, salesOrder);
+		return updatedSalesOrder;
+	}
+	
+	@RequestMapping(value= SalesOrderRestURIConstants.DELETLE_SALES,method= RequestMethod.DELETE)
+	public @ResponseBody void deleteSalesOrder(@PathVariable("id") String id){
+		SalesOrderDAO salesOrderDao = getSalesOrderDao();
+		salesOrderDao.delete(id);
 	}
 	
 	private SalesOrderDAO getSalesOrderDao(){

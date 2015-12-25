@@ -138,6 +138,14 @@ public class EditCustomer extends EditContentPanel
 		/*
 		 * This method use the object returned by Services.readRecordByCode and should map it to screen widgets 
 		 */
+		Customer customer = (Customer)o;
+		txtName.setText(customer.getName());
+		txtCode.setText(String.valueOf(customer.getId()));
+		txtPhone1.setText(customer.getPhoneNumber1());
+		txtPhone2.setText(customer.getPhoneNumber2());
+		txtAddress.setText(customer.getAddress());
+		txtCreditLimit.setText(String.valueOf(customer.getCreditLimit()));
+		txtCurrentCredit.setText(String.valueOf(customer.getCurrentCredit()));
 		return false;
 	}
 

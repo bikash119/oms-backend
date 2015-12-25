@@ -247,7 +247,7 @@ public class EditSalesOrder extends EditContentPanel
 		int rowCount = defaultTableModel.getRowCount();
 		for (int i = 0; i < rowCount; i++) {
 			OrderLine orderLine = new OrderLine();
-			//orderLine.setOrder(order);
+			orderLine.setOrder(order);
 			String productId = (String) defaultTableModel.getValueAt(i, 0);
 			Product product = (Product) Services.readRecordByCode(productId, Services.TYPE_PRODUCT);
 			orderLine.setProduct(product);

@@ -29,8 +29,8 @@ public class SalesOrderDataModel extends ListDataModel
 		 * each row is another array of columns of the row
 		 */
 		List<Object> records = Services.listCurrentRecords(Services.TYPE_SALESORDER);
-		//String[][] sampleData = new String [][]{{"22423","(01)Customer 1","122.5"},{"22424","(02)Customer 2","3242.5"}};
-		String[][] salesOrders = prepareRows(records);
+		String[][] salesOrders = new String [][]{{"22423","(01)Customer 1","122.5"},{"22424","(02)Customer 2","3242.5"}};
+		//String[][] salesOrders = prepareRows(records);
 		return salesOrders;
 	}
 	

@@ -19,7 +19,7 @@ public interface CustomerDAO {
 	
 	public Customer fetchById(String id);
 	
-	public void delete(String id);
+	public boolean delete(String id);
 	
 	public Customer update(String id,Customer customer);
 

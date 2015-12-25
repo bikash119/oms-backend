@@ -5,6 +5,7 @@ package com.crossover.assignment.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.crossover.assignment.dao.AbstractBusinessDAO;
@@ -22,8 +23,16 @@ public class SalesOrderDAOImpl extends AbstractBusinessDAO implements SalesOrder
 	 */
 	@Override
 	public SalesOrder save(SalesOrder salesOrder) {
-		this.getSession().save(salesOrder);
-		return null;
+		try {
+			beginTransacation();
+			this.getSession().save(salesOrder);
+			return salesOrder;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally{
+			commitTransaction();
+		}
 	}
 
 	/* (non-Javadoc)
@@ -32,7 +41,15 @@ public class SalesOrderDAOImpl extends AbstractBusinessDAO implements SalesOrder
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<SalesOrder> fetchAll() {
-		return this.getSession().createQuery("from SalesOrder").list();
+		try {
+			beginTransacation();
+			return this.getSession().createQuery("from SalesOrder").list();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			commitTransaction();
+		}
 	}
 
 	/* (non-Javadoc)
@@ -40,20 +57,42 @@ public class SalesOrderDAOImpl extends AbstractBusinessDAO implements SalesOrder
 	 */
 	@Override
 	public SalesOrder fetchById(String id) {
-		return (SalesOrder) this.getSession().load(SalesOrder.class, id);
+		try {
+			beginTransacation();
+			Session session = this.getSession();
+			StringBuilder queryBuilder = new StringBuilder(" from SalesOrder");
+			queryBuilder.append(" where id = " + id);
+			Query query = session.createQuery(queryBuilder.toString());
+			@SuppressWarnings("unchecked")
+			List<SalesOrder> salesOrders = query.list();
+			return (salesOrders != null && !salesOrders.isEmpty()) ? salesOrders.get(0) : null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			commitTransaction();
+		}
 	}
 
 	/* (non-Javadoc)
 	 * @see com.crossover.assignment.dao.SalesOrderDAO#delete(java.lang.String)
 	 */
 	@Override
-	public SalesOrder delete(String id) {
-		Session session = this.getSession();
-		Object salesOrder = session.load(SalesOrder.class,id);
-		if(salesOrder != null){
-			session.delete(salesOrder);
+	public boolean delete(String id) {
+		try {
+			beginTransacation();
+			Session session = this.getSession();
+			Object salesOrder = session.load(SalesOrder.class,id);
+			if(salesOrder != null){
+				session.delete(salesOrder);
+			}
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}finally {
+			commitTransaction();
 		}
-		return null;
 	}
 
 	/* (non-Javadoc)
@@ -61,8 +100,16 @@ public class SalesOrderDAOImpl extends AbstractBusinessDAO implements SalesOrder
 	 */
 	@Override
 	public SalesOrder update(String id, SalesOrder salesOrder) {
-		this.getSession().update(id,salesOrder);
-		return salesOrder;
+		try {
+			beginTransacation();
+			this.getSession().update(id,salesOrder);
+			return salesOrder;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			commitTransaction();
+		}
 	}
 
 }

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -41,18 +43,34 @@ public class CustomerController extends DefaultController{
 	@RequestMapping(value=CustomerRestURIConstants.GET_CUSTOMER_BY_ID,method=RequestMethod.GET)
 	public @ResponseBody Customer getCustomerById(@PathVariable("id") String custId){
 		logger.info("get customer by id : " + custId);
-		CustomerDAO customerDao = getCustomerDao();
-		Customer customer = customerDao.fetchById(custId);
-		return customer;
+		try {
+			CustomerDAO customerDao = getCustomerDao();
+			Customer customer = customerDao.fetchById(custId);
+			return customer;
+		} catch (Exception e) {
+		}finally{
+			closeContext();
+		}
+		return null;
 		
 	}
 	
+
 	//TODO implement pagination
+	@Transactional
 	@RequestMapping(value = CustomerRestURIConstants.GET_ALL_CUSTOMER,method=RequestMethod.GET)
 	public @ResponseBody List<Customer> getCustomers(){
 		logger.info("get all customers");
-		CustomerDAO dao = getCustomerDao();
-		List<Customer> customers = dao.fetchAll();
+		List<Customer> customers = null;
+		try {
+			CustomerDAO dao = getCustomerDao();
+			 customers = dao.fetchAll();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			closeContext();
+		}
 		return customers;
 	}
 	
@@ -72,9 +90,31 @@ public class CustomerController extends DefaultController{
 		return updatedCustomer;
 	}
 	
+	@RequestMapping(value=CustomerRestURIConstants.DELETLE_CUSTOMER,method=RequestMethod.DELETE)
+	public @ResponseBody void deleteCustomerById(@PathVariable("id") String id){
+		try {
+			CustomerDAO customerDao = getCustomerDao();
+			customerDao.delete(id);
+			
+ 		} catch (Exception e) {
+ 			
+		}finally {
+			closeContext();
+		}
+	}
+	
 	private CustomerDAO getCustomerDao() {
+		if(!context.isActive()){
+			context.refresh();
+		}
 		CustomerDAO dao = context.getBean(CustomerDAO.class);
 		return dao;
 	}
 	
+	private void closeContext() {
+		if(context != null){
+			context.destroy();
+			context.close();
+		}
+	}
 }

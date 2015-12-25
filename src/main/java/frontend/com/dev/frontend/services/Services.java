@@ -28,20 +28,24 @@ public class Services {
 		 * guiToObject on edit screen and the type is identifier of the object
 		 * type and may be TYPE_PRODUCT , TYPE_CUSTOMER or TYPE_SALESORDER
 		 */
+		Object insertedRecord = null;
 		switch (objectType) {
 		case 1:
 			Product products = upsertProductRecords(object);
+			insertedRecord = products;
 			break;
 		case 2:
 			Customer customers = upsertCustomerRecords(object);
+			insertedRecord = customers;
 			break;
 		case 3:
 			SalesOrder orders = upsertSalesOrderRecords(object);
+			insertedRecord = orders;
 			break;
 		default:
 			break;
 		}
-		return null;
+		return insertedRecord;
 	}
 
 	private static SalesOrder upsertSalesOrderRecords(Object obj) {

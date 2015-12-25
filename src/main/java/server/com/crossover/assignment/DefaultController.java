@@ -13,7 +13,10 @@ public abstract class DefaultController {
 	
 	protected ClassPathXmlApplicationContext context;
 	public DefaultController() {
-		context = new ClassPathXmlApplicationContext("spring.xml");
+		if(context == null){
+			context = new ClassPathXmlApplicationContext("spring.xml");
+		}
 	}
+	
 
 }
