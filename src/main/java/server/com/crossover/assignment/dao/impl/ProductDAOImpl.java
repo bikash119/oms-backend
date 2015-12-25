@@ -5,6 +5,7 @@ package com.crossover.assignment.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.crossover.assignment.dao.AbstractBusinessDAO;
@@ -40,7 +41,13 @@ public class ProductDAOImpl extends AbstractBusinessDAO implements ProductDAO {
 	 */
 	@Override
 	public Product fetchById(String id) {
-		return (Product)this.getSession().load(Product.class, id);
+		Session session = this.getSession();
+		StringBuilder queryBuilder = new StringBuilder(" from Product");
+		queryBuilder.append(" where id = '"+ id + "'");
+		Query query = session.createQuery(queryBuilder.toString());
+		List<Product> products = query.list();
+		Product product = (products != null && !products.isEmpty()) ? products.get(0): null;
+		return product;
 	}
 
 	/* (non-Javadoc)

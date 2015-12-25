@@ -24,13 +24,14 @@
 				<value>com.crossover.assignment.model.Customer</value>
 				<value>com.crossover.assignment.model.Product</value>
 				<value>com.crossover.assignment.model.SalesOrder</value>
+				<value>com.crossover.assignment.model.OrderLine</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 				<prop key="hibernate.current_session_context_class">thread</prop>
-				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.show_sql">true</prop>
 			</props>
 		</property>
 	</bean>
@@ -43,6 +44,9 @@
 		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</bean>
 	<bean id="salesOrderDao" class="com.crossover.assignment.dao.impl.SalesOrderDAOImpl">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+		<bean id="orderLineDao" class="com.crossover.assignment.dao.impl.OrderLineDAOImpl">
 		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</bean>
 </beans>

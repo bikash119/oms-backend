@@ -36,8 +36,11 @@ public class ProductFetchService implements FetchService<Product> {
 	}
 
 	@Override
-	public Product fetchById(int id) {
-		return null;
+	public Product fetchById(String id) {
+		RestTemplate restTemplate = new RestTemplate();
+		Product response = restTemplate.getForObject(SERVER_URI + "/rest/product/"+id,
+				Product.class);
+		return response;
 	}
 
 }

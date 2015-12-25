@@ -95,20 +95,64 @@ public class Services {
 
 	public static List<ComboBoxItem> listCurrentRecordRefernces(int objectType) {
 		// TODO by the candidate
-		/*
+		/* Bikash :- IMPL done
 		 * This method is called when a Combo Box need to be initialized and
 		 * should return list of ComboBoxItem which contains code and
 		 * description/name for all records of specified type
 		 */
-		return new ArrayList<ComboBoxItem>();
+		
+
+		List<ComboBoxItem> records = new ArrayList<ComboBoxItem>();
+		switch (objectType) {
+		case 1:
+			List<Product> products = fetchProductRecords();
+			for (Product product : products) {
+				records.add(prepareComboBoxItem(product));
+			}
+			break;
+		case 2:
+			List<Customer> customers = fetchCustomerRecords();
+			for (Customer customer : customers) {
+				records.add(prepareComboBoxItem(customer));
+			}
+			break;
+		default:
+			break;
+		}
+
+		return records;
+	}
+
+	private static ComboBoxItem prepareComboBoxItem(Customer customer) {
+		ComboBoxItem comboBoxItem = new ComboBoxItem();
+		comboBoxItem.setKey(customer.getId());
+		comboBoxItem.setValue(customer.getName());
+		return comboBoxItem;
+	}
+
+	private static ComboBoxItem prepareComboBoxItem(Product product) {
+		ComboBoxItem comboBoxItem = new ComboBoxItem();
+		comboBoxItem.setKey(product.getId());
+		comboBoxItem.setValue(product.getDesc());
+		return comboBoxItem;
 	}
 
 	public static double getProductPrice(String productCode) {
 		// TODO by the candidate
-		/*
+		/* Bikash :- IMPL done
 		 * This method is used to get unit price of product with the code passed
 		 * as a parameter
 		 */
+		Product productByCode = fetchProductByCode(productCode);
+		if(productByCode != null){
+			return productByCode.getPrice();
+		}
 		return 1;
+	}
+
+	private static Product fetchProductByCode(String productCode) {
+		FetchService<Product> productFetchService = new ProductFetchService();
+		Product product = productFetchService.fetchById(productCode);
+		return product;
 	}
 }

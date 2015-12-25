@@ -7,9 +7,12 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -33,7 +36,8 @@ public class OrderLine implements Serializable{
 	@Column(name="product", nullable=false)
 	private Product product;
 	
-	@Column(name="salesOrder",nullable=false)
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="salesOrderId")
 	private SalesOrder order;
 	
 	@Column(name="quantity",nullable=false)

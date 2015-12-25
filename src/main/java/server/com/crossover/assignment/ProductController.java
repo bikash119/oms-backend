@@ -38,7 +38,8 @@ public class ProductController extends DefaultController {
 		logger.info("get product by id :"+productId);
 		ProductDAO productDAO = getProductDAO();
 		
-		return productDAO.fetchById(productId);
+		Product product = productDAO.fetchById(productId);
+		return product;
 		
 	}
 	

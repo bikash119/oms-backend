@@ -15,7 +15,7 @@ public interface FetchService<T> {
 	
 	List<T> fetchAll();
 	
-	T fetchById(int id);
+	T fetchById(String id);
 	
 
 }

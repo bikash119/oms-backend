@@ -5,7 +5,6 @@ package com.crossover.assignment.model;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -41,6 +40,7 @@ public class SalesOrder implements Serializable{
 	@Column(name="totalPrice",nullable=false)
 	private float totalPrice;
 	
+	@OneToMany(fetch = FetchType.LAZY)
 	private Set<OrderLine> lineItems = new HashSet<OrderLine>();
 
 	public Customer getCustomer() {
@@ -67,7 +67,6 @@ public class SalesOrder implements Serializable{
 		this.id = id;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY,mappedBy="orderLine")
 	public Set<OrderLine> getLineItems() {
 		return lineItems;
 	}

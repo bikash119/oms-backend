@@ -24,7 +24,7 @@ public class ProductDataModel extends ListDataModel
 	public String[][] convertRecordsListToTableModel(List<Object> list) 
 	{
 		//TODO by the candidate
-		/* This task is done
+		/* Bikash :- IMPL done
 		 * This method use list returned by Services.listCurrentRecords and should convert it to array of rows
 		 * each row is another array of columns of the row
 		 */

@@ -14,7 +14,7 @@ import com.crossover.assignment.model.OrderLine;
  * @author bikash
  *
  */
-public class OrderLineDAO extends AbstractBusinessDAO implements com.crossover.assignment.dao.OrderLineDAO {
+public class OrderLineDAOImpl extends AbstractBusinessDAO implements com.crossover.assignment.dao.OrderLineDAO {
 
 	/* (non-Javadoc)
 	 * @see com.crossover.assignment.dao.OrderLineDAO#save(com.crossover.assignment.model.OrderLine)

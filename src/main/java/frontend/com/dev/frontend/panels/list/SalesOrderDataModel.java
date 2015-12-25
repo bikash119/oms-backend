@@ -2,7 +2,6 @@ package com.dev.frontend.panels.list;
 
 import java.util.List;
 
-import com.crossover.assignment.model.Customer;
 import com.crossover.assignment.model.SalesOrder;
 import com.dev.frontend.services.Services;
 
@@ -25,7 +24,7 @@ public class SalesOrderDataModel extends ListDataModel
 	public String[][] convertRecordsListToTableModel(List<Object> list) 
 	{
 		//TODO by the candidate
-		/*
+		/* Bikash :- IMPL done
 		 * This method use list returned by Services.listCurrentRecords and should convert it to array of rows
 		 * each row is another array of columns of the row
 		 */

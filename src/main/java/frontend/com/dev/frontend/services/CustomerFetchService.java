@@ -36,7 +36,7 @@ public class CustomerFetchService implements FetchService<Customer> {
 	}
 
 	@Override
-	public Customer fetchById(int id) {
+	public Customer fetchById(String id) {
 		return null;
 	}
 
