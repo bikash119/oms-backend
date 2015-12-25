@@ -150,8 +150,8 @@ public class EditCustomer extends EditContentPanel
 		 */
 		Customer customer = new Customer();
 		customer.setName(txtName.getText());
-		customer.setPhoneNumber(txtPhone1.getText());
-		customer.setCurrentCredit(Float.parseFloat(txtCreditLimit.getText()));
+		customer.setPhoneNumber1(txtPhone1.getText());
+		customer.setCurrentCredit(Double.parseDouble(txtCreditLimit.getText()));
 		return customer;
 	}
 

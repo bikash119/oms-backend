@@ -34,7 +34,7 @@ public class ProductController extends DefaultController {
 	}
 	
 	@RequestMapping(value=ProductRestURIConstants.GET_PRODUCT_BY_ID,method=RequestMethod.GET)
-	public @ResponseBody Product getProductById(@PathVariable("id") String productId){
+	public @ResponseBody Product getProductById(@PathVariable("id") long productId){
 		logger.info("get product by id :"+productId);
 		ProductDAO productDAO = getProductDAO();
 		

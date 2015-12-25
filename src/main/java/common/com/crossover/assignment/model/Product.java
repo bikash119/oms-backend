@@ -34,7 +34,7 @@ public class Product implements Serializable{
 	private String desc;
 	
 	@Column(name="price",nullable=false)
-	private float price;
+	private double price;
 	
 	@Column(name="quantity",nullable=false)
 	private long quantity;
@@ -45,14 +45,6 @@ public class Product implements Serializable{
 
 	public void setDesc(String desc) {
 		this.desc = desc;
-	}
-
-	public float getPrice() {
-		return price;
-	}
-
-	public void setPrice(float price) {
-		this.price = price;
 	}
 
 	public long getQuantity() {
@@ -69,6 +61,14 @@ public class Product implements Serializable{
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 }

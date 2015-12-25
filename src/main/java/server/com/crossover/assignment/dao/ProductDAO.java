@@ -15,7 +15,7 @@ public interface ProductDAO {
 	
 	public List<Product> fetchAll();
 	
-	public Product fetchById(String id);
+	public Product fetchById(long id);
 	
 	public Product delete(String id);
 	

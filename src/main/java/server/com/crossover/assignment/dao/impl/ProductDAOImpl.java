@@ -40,7 +40,7 @@ public class ProductDAOImpl extends AbstractBusinessDAO implements ProductDAO {
 	 * @see com.crossover.assignment.dao.ProductDAO#fetchById(java.lang.String)
 	 */
 	@Override
-	public Product fetchById(String id) {
+	public Product fetchById(long id) {
 		Session session = this.getSession();
 		StringBuilder queryBuilder = new StringBuilder(" from Product");
 		queryBuilder.append(" where id = "+ id);

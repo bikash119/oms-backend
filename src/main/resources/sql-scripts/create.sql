@@ -8,8 +8,9 @@ drop table if exists Customer;
 drop table if exists Product;
 drop 
 --Create table scripts
-create table if not exists Product( id BIGINT not null AUTO_INCREMENT primary key,description varchar(100),price float(8,2),quantity int);
-create table if not exists Customer(id BIGINT not null AUTO_INCREMENT primary key,name varchar(100),currentCredit float(8,2), phoneNumber varchar(50));
+create table if not exists Product( id BIGINT not null AUTO_INCREMENT primary key,description varchar(100),price double(10,2),quantity int);
+create table if not exists Customer(id BIGINT not null AUTO_INCREMENT primary key,name varchar(100),phoneNumber1 varchar(50),phoneNumber2 varchar(50),
+address varchar(100),creditLimit double(10,2), currentCredit double(10,2));
 create table if not exists SalesOrder(id BIGINT not null AUTO_INCREMENT primary key,totalPrice float(8,2),customerId BIGINT not null,
 foreign key customer(customerId) references Customer(id));
 create table if not exists OrderLine(id BIGINT not null AUTO_INCREMENT primary key,productQuantity int,price float(8,2),productId BIGINT not null,
@@ -17,10 +18,10 @@ salesOrderId BIGINT not null, foreign key product(productId) references Product(
 
 --Dummy Data Insert Scripts
 --Customer
-insert into Customer (id,name,currentCredit,phoneNumber) values(01,"Customer 1",23.9,"+201011121314");
-insert into Customer (id,name,currentCredit,phoneNumber) values(02,"Customer 2",386.98,"+201011121314");
-insert into Customer (id,name,currentCredit,phoneNumber) values(03,"Customer 3",10098.09,"+201011121314");
-insert into Customer (id,name,currentCredit,phoneNumber) values(04,"Customer 4",767896.19,"+201011121314");
+insert into Customer (id,name,phoneNumber1,phoneNumber2,address,creditLimit,currentCredit) values(01,"Customer 1","+201011121314",null,"USA",1000,1000);
+insert into Customer (id,name,phoneNumber1,phoneNumber2,address,creditLimit,currentCredit) values(02,"Customer 2","+201011121314",null,"INDIA",10000,1000);
+insert into Customer (id,name,phoneNumber1,phoneNumber2,address,creditLimit,currentCredit) values(03,"Customer 3","+201011121314",null,"USA",2000.98,1000);
+insert into Customer (id,name,phoneNumber1,phoneNumber2,address,creditLimit,currentCredit) values(04,"Customer 4","+201011121314",null,"INDIA",100.0,99.90);
 
 --Product
 insert into Product(id,description,price,quantity) values(01,"Product 1",34.8,9);

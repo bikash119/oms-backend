@@ -51,7 +51,7 @@ public class CustomerDataModel extends ListDataModel
 		Customer cust = (Customer)row;
 		cols[0] = cust.getId()+"";
 		cols[1] = cust.getName();
-		cols[2] = cust.getPhoneNumber();
+		cols[2] = cust.getPhoneNumber1();
 		cols[3] = cust.getCurrentCredit()+"";
 		return cols;
 	}

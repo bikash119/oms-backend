@@ -37,7 +37,7 @@ public class CustomerCRUDService implements CRUDService<Customer,CustomerCRUDSer
 			customer.setId(Long.parseLong(map.get("id").toString()));
 			customer.setCurrentCredit(Float.parseFloat((map.get("currentCredit").toString())));
 			customer.setName(map.get("name").toString());
-			customer.setPhoneNumber(map.get("phoneNumber").toString());
+			customer.setPhoneNumber1(map.get("phoneNumber1").toString());
 			customers.add(customer);
 		}
 		return customers;
@@ -46,7 +46,7 @@ public class CustomerCRUDService implements CRUDService<Customer,CustomerCRUDSer
 	@Override
 	public Customer fetchById(String id) throws CustomerCRUDServiceException {
 		RestTemplate restTemplate = new RestTemplate();
-		Customer customer = restTemplate.getForObject(SERVER_URI + CustomerRestURIConstants.GET_CUSTOMER_BY_ID + id, Customer.class);
+		Customer customer = restTemplate.getForObject(SERVER_URI + "/rest/customer/" + id, Customer.class);
 		return customer;
 	}
 
@@ -61,7 +61,7 @@ public class CustomerCRUDService implements CRUDService<Customer,CustomerCRUDSer
 	@Override
 	public Customer update(Customer entity, Long id) throws CustomerCRUDServiceException {
 		RestTemplate restTemplate = new RestTemplate();
-		Customer customer = restTemplate.postForObject(SERVER_URI+CustomerRestURIConstants.UPDATE_CUSTOMER+id, entity, Customer.class);
+		Customer customer = restTemplate.postForObject(SERVER_URI+"/rest/customer/update/"+id, entity, Customer.class);
 		return customer;
 	}
 
@@ -70,7 +70,7 @@ public class CustomerCRUDService implements CRUDService<Customer,CustomerCRUDSer
 		RestTemplate restTemplate = new RestTemplate();
 		boolean isDeleted = true;
 		try {
-			restTemplate.delete(SERVER_URI+CustomerRestURIConstants.DELETLE_CUSTOMER+id);
+			restTemplate.delete(SERVER_URI+"/rest/customer/delete/"+id);
 		} catch (RestClientException e) {
 			isDeleted = false;
 			throw new CustomerCRUDServiceException(e.getCause());

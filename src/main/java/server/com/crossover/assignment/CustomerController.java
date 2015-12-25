@@ -34,7 +34,7 @@ public class CustomerController extends DefaultController{
 		cust.setId(01L);
 		cust.setCurrentCredit(23.4f);
 		cust.setName("Customer 1");
-		cust.setPhoneNumber("+201011121314");
+		cust.setPhoneNumber1("+201011121314");
 		return cust;
 	}
 	

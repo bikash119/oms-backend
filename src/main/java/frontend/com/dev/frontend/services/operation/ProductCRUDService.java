@@ -44,7 +44,7 @@ public class ProductCRUDService implements CRUDService<Product,ProductCRUDServic
 	@Override
 	public Product fetchById(String id) throws ProductCRUDServiceException {
 		RestTemplate restTemplate = new RestTemplate();
-		Product response = restTemplate.getForObject(SERVER_URI + ProductRestURIConstants.GET_PRODUCT_BY_ID+id,
+		Product response = restTemplate.getForObject(SERVER_URI + "/rest/product/"+id,
 				Product.class);
 		return response;
 	}
@@ -59,14 +59,14 @@ public class ProductCRUDService implements CRUDService<Product,ProductCRUDServic
 	@Override
 	public Product update(Product entity, Long id) throws ProductCRUDServiceException {
 		RestTemplate restTemplate = new RestTemplate();
-		Product product = restTemplate.postForObject(SERVER_URI+ProductRestURIConstants.UPDATE_PRODUCT+id, entity, Product.class);
+		Product product = restTemplate.postForObject(SERVER_URI+"/rest/product/update/"+id, entity, Product.class);
 		return product;
 	}
 
 	@Override
 	public boolean delete(String id) throws ProductCRUDServiceException {
 		RestTemplate restTemplate = new RestTemplate();
-		restTemplate.delete(SERVER_URI+ProductRestURIConstants.DELETLE_PRODUCT);
+		restTemplate.delete(SERVER_URI+"/rest/product/delete/"+id);
 		return false;
 	}
 

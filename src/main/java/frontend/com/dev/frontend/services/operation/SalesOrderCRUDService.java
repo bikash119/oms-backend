@@ -43,7 +43,7 @@ public class SalesOrderCRUDService implements CRUDService<SalesOrder,SalesOrderC
 	@Override
 	public SalesOrder fetchById(String id) throws SalesOrderCRUDServiceException{
 		RestTemplate restTemplate = new RestTemplate();
-		SalesOrder salesOrder = restTemplate.getForObject(SERVER_URI+SalesOrderRestURIConstants.GET_SALES_BY_ID+id, SalesOrder.class);
+		SalesOrder salesOrder = restTemplate.getForObject(SERVER_URI+"/rest/salesorder/"+id, SalesOrder.class);
 		return salesOrder;
 	}
 
@@ -58,14 +58,14 @@ public class SalesOrderCRUDService implements CRUDService<SalesOrder,SalesOrderC
 	@Override
 	public SalesOrder update(SalesOrder entity, Long id) throws SalesOrderCRUDServiceException{
 		RestTemplate restTemplate = new RestTemplate();
-		SalesOrder salesOrder = restTemplate.postForObject(SERVER_URI+SalesOrderRestURIConstants.UPDATE_SALES+id, entity,SalesOrder.class);
+		SalesOrder salesOrder = restTemplate.postForObject(SERVER_URI+"/rest/salesorder/update/"+id, entity,SalesOrder.class);
 		return salesOrder;
 	}
 
 	@Override
 	public boolean delete(String id) throws SalesOrderCRUDServiceException{
 		RestTemplate restTemplate = new RestTemplate();
-		restTemplate.delete(SERVER_URI+SalesOrderRestURIConstants.DELETLE_SALES+id);
+		restTemplate.delete(SERVER_URI+"/rest/salesorder/delete/"+id);
 		return false;
 	}
 
