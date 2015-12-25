@@ -22,7 +22,7 @@ public class Services {
 
 	public static Object save(Object object, int objectType) {
 		// TODO by the candidate
-		/*
+		/*	Bikash :- IMPL done
 		 * This method is called eventually after you click save on any edit
 		 * screen object parameter is the return object from calling method
 		 * guiToObject on edit screen and the type is identifier of the object
@@ -54,7 +54,6 @@ public class Services {
 				salesOrder = orderService.create(salesOrder);
 			}
 		} catch (SalesOrderCRUDServiceException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return salesOrder;
@@ -70,7 +69,6 @@ public class Services {
 				customer = customerService.create(customer);
 			}
 		} catch (CustomerCRUDServiceException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -94,7 +92,7 @@ public class Services {
 
 	public static Object readRecordByCode(String code, int objectType) {
 		// TODO by the candidate
-		/*
+		/*	Bikash: IMPL done.
 		 * This method is called when you select record in list view of any
 		 * entity and also called after you save a record to re-bind the record
 		 * again the code parameter is the first column of the row you have
@@ -176,7 +174,6 @@ public class Services {
 		try {
 			customers = customerFetchService.fetchAll();
 		} catch (CustomerCRUDServiceException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return customers;
@@ -188,7 +185,6 @@ public class Services {
 		try {
 			salesOrders = salesOrderFetchService.fetchAll();
 		} catch (SalesOrderCRUDServiceException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return salesOrders;
@@ -200,7 +196,6 @@ public class Services {
 		try {
 			product = productFetchService.fetchById(productId);
 		} catch (ProductCRUDServiceException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return product;
@@ -212,7 +207,6 @@ public class Services {
 		try {
 			customer = customerFetchService.fetchById(customerId);
 		} catch (CustomerCRUDServiceException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return customer;
@@ -224,7 +218,6 @@ public class Services {
 		try {
 			salesOrder = salesOrderFetchService.fetchById(salesOrderId);
 		} catch (SalesOrderCRUDServiceException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return salesOrder;

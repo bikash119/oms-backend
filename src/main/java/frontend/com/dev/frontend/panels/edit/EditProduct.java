@@ -92,7 +92,7 @@ public class EditProduct extends EditContentPanel
 	public Object guiToObject() 
 	{
 		// TODO by the candidate
-		/*
+		/* Bikash :- IMPL done
 		 * This method collect values from screen widgets and convert them to object of your type
 		 * This object will be used as a parameter of method Services.save
 		 */
