@@ -5,6 +5,7 @@ package com.crossover.assignment.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.crossover.assignment.dao.AbstractBusinessDAO;
@@ -42,7 +43,12 @@ public class CustomerDAOImpl extends AbstractBusinessDAO implements CustomerDAO 
 	 */
 	@Override
 	public Customer fetchById(String id) {
-		Customer customer = (Customer)this.getSession().load(Customer.class, id);
+		Session session = this.getSession();
+		StringBuilder queryBuilder = new StringBuilder(" from Customer");
+		queryBuilder.append(" where id = "+ id );
+		Query query = session.createQuery(queryBuilder.toString());
+		List<Customer> customers = query.list();
+		Customer customer = (customers != null && !customers.isEmpty()) ? customers.get(0): null;
 		return customer;
 	}
 

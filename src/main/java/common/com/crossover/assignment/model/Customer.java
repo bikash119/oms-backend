@@ -7,7 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
 
 /**
  * @author bikash
@@ -25,7 +30,7 @@ public class Customer implements Serializable{
 	@Id
 	@Column(name="id",nullable=false,unique=true)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private String id;
+	private long id;
 	
 	@Column(name="name")
 	private String name;
@@ -35,6 +40,10 @@ public class Customer implements Serializable{
 	
 	@Column(name="currentCredit",nullable=false)
 	private float currentCredit;
+	
+	 @OneToOne(mappedBy="customer")
+	 @Cascade(value=org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	 private SalesOrder salesOrder;
 
 	public String getName() {
 		return name;
@@ -60,11 +69,11 @@ public class Customer implements Serializable{
 		this.currentCredit = currentCredit;
 	}
 
-	public String getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

@@ -16,7 +16,7 @@ import com.crossover.assignment.service.url.SalesOrderRestURIConstants;
  * @author bikash
  *
  */
-public class SalesOrderFetchService implements FetchService<SalesOrder>{
+public class SalesOrderCRUDService implements CRUDService<SalesOrder>{
 
 	@Override
 	public List<SalesOrder> fetchAll() {
@@ -26,7 +26,7 @@ public class SalesOrderFetchService implements FetchService<SalesOrder>{
 				List.class);
 		for (LinkedHashMap map : response) {
 			SalesOrder order = new SalesOrder();
-			order.setId(map.get("id").toString());
+			order.setId(Long.parseLong(map.get("id").toString()));
 			Object object = map.get("customer");
 			order.setTotalPrice(Integer.parseInt(map.get("totalPrice").toString()));
 			orders.add(order);
@@ -37,6 +37,24 @@ public class SalesOrderFetchService implements FetchService<SalesOrder>{
 	@Override
 	public SalesOrder fetchById(String id) {
 		return null;
+	}
+
+	@Override
+	public SalesOrder create(SalesOrder entity) {
+		RestTemplate restTemplate = new RestTemplate();
+		SalesOrder salesOrder = restTemplate.postForObject(SERVER_URI + SalesOrderRestURIConstants.CREATE_SALES,entity,
+				SalesOrder.class);
+		return salesOrder;
+	}
+
+	@Override
+	public SalesOrder update(SalesOrder entity, String id) {
+		return null;
+	}
+
+	@Override
+	public boolean delete(String id) {
+		return false;
 	}
 
 }

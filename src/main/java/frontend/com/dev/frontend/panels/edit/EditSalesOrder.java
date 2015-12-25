@@ -6,7 +6,10 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -19,6 +22,10 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 
+import com.crossover.assignment.model.Customer;
+import com.crossover.assignment.model.OrderLine;
+import com.crossover.assignment.model.Product;
+import com.crossover.assignment.model.SalesOrder;
 import com.dev.frontend.panels.ComboBoxItem;
 import com.dev.frontend.services.Services;
 import com.dev.frontend.services.Utils;
@@ -226,7 +233,29 @@ public class EditSalesOrder extends EditContentPanel
 		 * This method collect values from screen widgets and convert them to object of your type
 		 * This object will be used as a parameter of method Services.save
 		 */
-		return null;
+		SalesOrder order = new SalesOrder();
+		ComboBoxItem selectedItem = (ComboBoxItem)txtCustomer.getSelectedItem();
+		Customer customer = (Customer)Services.readRecordByCode(selectedItem.getKey(), Services.TYPE_CUSTOMER);
+		order.setCustomer(customer);
+		order.setTotalPrice(Float.parseFloat(txtTotalPrice.getText()));
+		order.setLineItems(createLineItems(defaultTableModel,order));
+		return order;
+	}
+
+	private Set<OrderLine> createLineItems(DefaultTableModel defaultTableModel, SalesOrder order) {
+		Set<OrderLine> lineItems = new HashSet<OrderLine>();
+		int rowCount = defaultTableModel.getRowCount();
+		for (int i = 0; i < rowCount; i++) {
+			OrderLine orderLine = new OrderLine();
+			//orderLine.setOrder(order);
+			String productId = (String) defaultTableModel.getValueAt(i, 0);
+			Product product = (Product) Services.readRecordByCode(productId, Services.TYPE_PRODUCT);
+			orderLine.setProduct(product);
+			orderLine.setProductPrice(product.getPrice());
+			orderLine.setProductQuantity(Integer.parseInt(defaultTableModel.getValueAt(i, 1).toString()));
+			lineItems.add(orderLine);
+		}
+		return lineItems;
 	}
 
 	public int getObjectType()

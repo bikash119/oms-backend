@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.crossover.assignment.dao.SalesOrderDAO;
 import com.crossover.assignment.model.SalesOrder;
 import com.crossover.assignment.service.url.SalesOrderRestURIConstants;
 
@@ -28,13 +29,13 @@ public class SalesOrderController extends DefaultController {
 	
 	@RequestMapping(value=SalesOrderRestURIConstants.SALES_DUMMY,method= RequestMethod.GET)
 	public @ResponseBody SalesOrder getDummySalesOrder(){
-		logger.info("");
+		logger.info("get dummy sales order");
 		return null;
 	}
 	
 	@RequestMapping(value=SalesOrderRestURIConstants.GET_SALES_BY_ID,method=RequestMethod.GET)
-	public @ResponseBody SalesOrder getSalesOrderById(@PathVariable("id") int custId){
-		logger.info("");
+	public @ResponseBody SalesOrder getSalesOrderById(@PathVariable("id") String orderId){
+		logger.info("get sales order by id :"+orderId);
 		return null;
 		
 	}
@@ -42,20 +43,27 @@ public class SalesOrderController extends DefaultController {
 	//TODO implement pagination
 	@RequestMapping(value = SalesOrderRestURIConstants.GET_ALL_SALES,method=RequestMethod.GET)
 	public @ResponseBody List<SalesOrder> getOrders(){
-		logger.info("");
+		logger.info("get all orders");
 		return null;
 	}
 	
 	@RequestMapping(value=SalesOrderRestURIConstants.CREATE_SALES,method=RequestMethod.POST)
 	public @ResponseBody SalesOrder createSalesOrder(@RequestBody SalesOrder salesOrder){
-		logger.info("");
-		return null;
+		logger.info("create sales order");
+		SalesOrderDAO salesOrderDao = getSalesOrderDao();
+		SalesOrder order = salesOrderDao.save(salesOrder);
+		return order;
 	}
 	
 	@RequestMapping(value=SalesOrderRestURIConstants.UPDATE_SALES,method=RequestMethod.POST)
-	public @ResponseBody SalesOrder updateSalesOrder(@RequestBody SalesOrder salesOrder,@PathVariable("id") int id){
-		logger.info("");
+	public @ResponseBody SalesOrder updateSalesOrder(@RequestBody SalesOrder salesOrder,@PathVariable("id") String id){
+		logger.info("update sales order");
 		return null;
+	}
+	
+	private SalesOrderDAO getSalesOrderDao(){
+		SalesOrderDAO salesOrderDAO = this.context.getBean(SalesOrderDAO.class);
+		return salesOrderDAO;
 	}
 	
 }

@@ -22,7 +22,7 @@ public class SalesOrderDAOImpl extends AbstractBusinessDAO implements SalesOrder
 	 */
 	@Override
 	public SalesOrder save(SalesOrder salesOrder) {
-		this.getSession().persist(salesOrder);
+		this.getSession().save(salesOrder);
 		return null;
 	}
 

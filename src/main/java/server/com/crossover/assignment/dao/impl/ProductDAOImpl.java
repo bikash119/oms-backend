@@ -43,7 +43,7 @@ public class ProductDAOImpl extends AbstractBusinessDAO implements ProductDAO {
 	public Product fetchById(String id) {
 		Session session = this.getSession();
 		StringBuilder queryBuilder = new StringBuilder(" from Product");
-		queryBuilder.append(" where id = '"+ id + "'");
+		queryBuilder.append(" where id = "+ id);
 		Query query = session.createQuery(queryBuilder.toString());
 		List<Product> products = query.list();
 		Product product = (products != null && !products.isEmpty()) ? products.get(0): null;

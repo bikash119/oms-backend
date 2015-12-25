@@ -16,7 +16,7 @@ import com.crossover.assignment.service.url.ProductRestURIConstants;
  * @author bikash
  *
  */
-public class ProductFetchService implements FetchService<Product> {
+public class ProductCRUDService implements CRUDService<Product> {
 
 	@Override
 	public List<Product> fetchAll() {
@@ -26,7 +26,7 @@ public class ProductFetchService implements FetchService<Product> {
 				List.class);
 		for (LinkedHashMap map : response) {
 			Product product = new Product();
-			product.setId(map.get("id").toString());
+			product.setId(Long.parseLong(map.get("id").toString()));
 			product.setDesc(map.get("desc").toString());
 			product.setPrice(Float.parseFloat(map.get("price").toString()));
 			product.setQuantity(Integer.parseInt(map.get("quantity").toString()));
@@ -41,6 +41,21 @@ public class ProductFetchService implements FetchService<Product> {
 		Product response = restTemplate.getForObject(SERVER_URI + "/rest/product/"+id,
 				Product.class);
 		return response;
+	}
+
+	@Override
+	public Product create(Product entity) {
+		return null;
+	}
+
+	@Override
+	public Product update(Product entity, String id) {
+		return null;
+	}
+
+	@Override
+	public boolean delete(String id) {
+		return false;
 	}
 
 }

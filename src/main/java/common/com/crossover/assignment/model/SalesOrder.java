@@ -13,33 +13,39 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
 
 /**
  * @author bikash
  *
  */
 @Entity
-@Table(name="SalesOrder")
-public class SalesOrder implements Serializable{
-	
+@Table(name = "SalesOrder")
+public class SalesOrder implements Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="id",nullable=false,unique=true)
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private String id;
-	
-	@Column(name="customer",nullable=false)
+	@Column(name = "id", nullable = false, unique = true)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+
+	@OneToOne
+	@JoinColumn(columnDefinition="customer" , referencedColumnName="id" ,name="customerId")
 	private Customer customer;
-	
-	@Column(name="totalPrice",nullable=false)
-	private float totalPrice;
-	
+
+	@Column(name = "totalPrice", nullable = false)
+	private double totalPrice;
+
 	@OneToMany(fetch = FetchType.LAZY)
 	private Set<OrderLine> lineItems = new HashSet<OrderLine>();
 
@@ -51,20 +57,12 @@ public class SalesOrder implements Serializable{
 		this.customer = customer;
 	}
 
-	public float getTotalPrice() {
+	public double getTotalPrice() {
 		return totalPrice;
 	}
 
-	public void setTotalPrice(float totalPrice) {
+	public void setTotalPrice(double totalPrice) {
 		this.totalPrice = totalPrice;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public Set<OrderLine> getLineItems() {
@@ -73,6 +71,14 @@ public class SalesOrder implements Serializable{
 
 	public void setLineItems(Set<OrderLine> lineItems) {
 		this.lineItems = lineItems;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 }

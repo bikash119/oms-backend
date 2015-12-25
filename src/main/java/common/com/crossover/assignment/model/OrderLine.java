@@ -31,7 +31,7 @@ public class OrderLine implements Serializable{
 	@Id
 	@Column(name="id",nullable=false,unique=true)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private String id;
+	private long id;
 	
 	@Column(name="product", nullable=false)
 	private Product product;
@@ -44,7 +44,7 @@ public class OrderLine implements Serializable{
 	private int productQuantity;
 	
 	@Column(name="price",nullable=false)
-	private long productPrice;
+	private double productPrice;
 
 	public Product getProduct() {
 		return product;
@@ -70,19 +70,19 @@ public class OrderLine implements Serializable{
 		this.productQuantity = productQuantity;
 	}
 
-	public long getProductPrice() {
+	public double getProductPrice() {
 		return productPrice;
 	}
 
-	public void setProductPrice(long productPrice) {
+	public void setProductPrice(double productPrice) {
 		this.productPrice = productPrice;
 	}
 
-	public String getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

@@ -21,6 +21,33 @@ public class Services {
 		 * guiToObject on edit screen and the type is identifier of the object
 		 * type and may be TYPE_PRODUCT , TYPE_CUSTOMER or TYPE_SALESORDER
 		 */
+		switch (objectType) {
+		case 1:
+			Product products = createProductRecords(object);
+			break;
+		case 2:
+			Customer customers = createCustomerRecords(object);
+			break;
+		case 3:
+			SalesOrder orders = createSalesOrderRecords(object);
+			break;
+		default:
+			break;
+		}
+		return null;
+	}
+
+	private static SalesOrder createSalesOrderRecords(Object obj) {
+		CRUDService<SalesOrder> orderService = new SalesOrderCRUDService();
+		SalesOrder order = orderService.create((SalesOrder)obj);
+		return order;
+	}
+
+	private static Customer createCustomerRecords(Object obj) {
+		return null;
+	}
+
+	private static Product createProductRecords(Object obj) {
 		return null;
 	}
 
@@ -33,7 +60,23 @@ public class Services {
 		 * selected and the type is identifier of the object type and may be
 		 * TYPE_PRODUCT , TYPE_CUSTOMER or TYPE_SALESORDER
 		 */
-		return null;
+		
+
+		Object record = null;
+		switch (objectType) {
+		case 1:
+			record = fetchProductRecordByProductId(code);
+			break;
+		case 2:
+			record = fetchCustomerRecordByCustomerId(code);
+			break;
+		case 3:
+			record = fetchSalesOrderRecordBySalesOrderId(code);
+			break;
+		default:
+			break;
+		}
+		return record;
 	}
 
 	public static boolean deleteRecordByCode(String code, int objectType) {
@@ -76,21 +119,39 @@ public class Services {
 	}
 
 	private static List<Product> fetchProductRecords() {
-		FetchService<Product> productFetchService = new ProductFetchService();
+		CRUDService<Product> productFetchService = new ProductCRUDService();
 		List<Product> products = productFetchService.fetchAll();
 		return products;
 	}
 
 	private static List<Customer> fetchCustomerRecords() {
-		FetchService<Customer> customerFetchService = new CustomerFetchService();
+		CRUDService<Customer> customerFetchService = new CustomerCRUDService();
 		List<Customer> customers = customerFetchService.fetchAll();
 		return customers;
 	}
 
 	private static List<SalesOrder> fetchSalesOrderRecords() {
-		FetchService<SalesOrder> salesOrderFetchService = new SalesOrderFetchService();
+		CRUDService<SalesOrder> salesOrderFetchService = new SalesOrderCRUDService();
 		List<SalesOrder> salesOrders = salesOrderFetchService.fetchAll();
 		return salesOrders;
+	}
+	
+	private static Product fetchProductRecordByProductId(String productId) {
+		CRUDService<Product> productFetchService = new ProductCRUDService();
+		Product product = productFetchService.fetchById(productId);
+		return product;
+	}
+
+	private static Customer fetchCustomerRecordByCustomerId(String customerId) {
+		CRUDService<Customer> customerFetchService = new CustomerCRUDService();
+		Customer customer = customerFetchService.fetchById(customerId);
+		return customer;
+	}
+
+	private static SalesOrder fetchSalesOrderRecordBySalesOrderId(String salesOrderId) {
+		CRUDService<SalesOrder> salesOrderFetchService = new SalesOrderCRUDService();
+		SalesOrder salesOrder = salesOrderFetchService.fetchById(salesOrderId);
+		return salesOrder;
 	}
 
 	public static List<ComboBoxItem> listCurrentRecordRefernces(int objectType) {
@@ -125,14 +186,14 @@ public class Services {
 
 	private static ComboBoxItem prepareComboBoxItem(Customer customer) {
 		ComboBoxItem comboBoxItem = new ComboBoxItem();
-		comboBoxItem.setKey(customer.getId());
+		comboBoxItem.setKey(String.valueOf(customer.getId()));
 		comboBoxItem.setValue(customer.getName());
 		return comboBoxItem;
 	}
 
 	private static ComboBoxItem prepareComboBoxItem(Product product) {
 		ComboBoxItem comboBoxItem = new ComboBoxItem();
-		comboBoxItem.setKey(product.getId());
+		comboBoxItem.setKey(String.valueOf(product.getId()));
 		comboBoxItem.setValue(product.getDesc());
 		return comboBoxItem;
 	}
@@ -151,7 +212,7 @@ public class Services {
 	}
 
 	private static Product fetchProductByCode(String productCode) {
-		FetchService<Product> productFetchService = new ProductFetchService();
+		CRUDService<Product> productFetchService = new ProductCRUDService();
 		Product product = productFetchService.fetchById(productCode);
 		return product;
 	}
