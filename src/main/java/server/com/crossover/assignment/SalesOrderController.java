@@ -43,7 +43,7 @@ public class SalesOrderController extends DefaultController {
 	}
 	
 	@RequestMapping(value=SalesOrderRestURIConstants.GET_SALES_BY_ID,method=RequestMethod.GET)
-	public @ResponseBody SalesOrder getSalesOrderById(@PathVariable("id") String orderId){
+	public @ResponseBody SalesOrder getSalesOrderById(@PathVariable("id") long orderId){
 		logger.info("get sales order by id :"+orderId);
 		SalesOrderDAO salesOrderDao = getSalesOrderDao();
 		SalesOrder salesOrder = salesOrderDao.fetchById(orderId);
@@ -161,6 +161,13 @@ public class SalesOrderController extends DefaultController {
 	@RequestMapping(value= SalesOrderRestURIConstants.DELETLE_SALES,method= RequestMethod.DELETE)
 	public @ResponseBody void deleteSalesOrder(@PathVariable("id") long id){
 		SalesOrderDAO salesOrderDao = getSalesOrderDao();
+		SalesOrder salesOrder = salesOrderDao.fetchById(id);
+		if(salesOrder != null){
+			Set<OrderLine> lineItems = salesOrder.getLineItems();
+			for (OrderLine orderLine : lineItems) {
+				getLineItemDao().delete(orderLine.getId());
+			}
+		}
 		salesOrderDao.delete(id);
 	}
 	

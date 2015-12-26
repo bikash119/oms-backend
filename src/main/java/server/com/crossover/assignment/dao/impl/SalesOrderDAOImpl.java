@@ -4,12 +4,14 @@
 package com.crossover.assignment.dao.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.crossover.assignment.dao.AbstractBusinessDAO;
 import com.crossover.assignment.dao.SalesOrderDAO;
+import com.crossover.assignment.model.OrderLine;
 import com.crossover.assignment.model.SalesOrder;
 
 /**
@@ -56,7 +58,7 @@ public class SalesOrderDAOImpl extends AbstractBusinessDAO implements SalesOrder
 	 * @see com.crossover.assignment.dao.SalesOrderDAO#fetchById(java.lang.String)
 	 */
 	@Override
-	public SalesOrder fetchById(String id) {
+	public SalesOrder fetchById(long id) {
 		try {
 			beginTransacation();
 			Session session = this.getSession();
@@ -82,7 +84,7 @@ public class SalesOrderDAOImpl extends AbstractBusinessDAO implements SalesOrder
 		try {
 			beginTransacation();
 			Session session = this.getSession();
-			Object salesOrder = session.load(SalesOrder.class,id);
+			SalesOrder salesOrder = (SalesOrder)session.load(SalesOrder.class,id);
 			if(salesOrder != null){
 				session.delete(salesOrder);
 			}

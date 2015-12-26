@@ -18,7 +18,7 @@ public interface SalesOrderDAO {
 	
 	public List<SalesOrder> fetchAll();
 	
-	public SalesOrder fetchById(String id);
+	public SalesOrder fetchById(long id);
 	
 	public boolean delete(long id);
 	
