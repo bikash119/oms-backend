@@ -49,7 +49,6 @@ public class CustomerController extends DefaultController{
 			return customer;
 		} catch (Exception e) {
 		}finally{
-			closeContext();
 		}
 		return null;
 		
@@ -69,7 +68,6 @@ public class CustomerController extends DefaultController{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
-			closeContext();
 		}
 		return customers;
 	}
@@ -99,22 +97,12 @@ public class CustomerController extends DefaultController{
  		} catch (Exception e) {
  			
 		}finally {
-			closeContext();
 		}
 	}
 	
 	private CustomerDAO getCustomerDao() {
-		if(!context.isActive()){
-			context.refresh();
-		}
 		CustomerDAO dao = context.getBean(CustomerDAO.class);
 		return dao;
 	}
 	
-	private void closeContext() {
-		if(context != null){
-			context.destroy();
-			context.close();
-		}
-	}
 }
