@@ -119,7 +119,9 @@ public class SalesOrderController extends DefaultController {
 
 	private void updateCustomerCurrentCredit(SalesOrder salesOrder) {
 		CustomerDAO customerDAO = getCustomerDAO();
-		customerDAO.update(salesOrder.getCustomer().getId(), salesOrder.getCustomer());
+		Customer customer = salesOrder.getCustomer();
+		customer.setCurrentCredit(customer.getCreditLimit() - salesOrder.getTotalPrice());
+		customerDAO.update(customer.getId(), customer);
 	}
 
 	private boolean performBusinessValidation(SalesOrder salesOrder) {

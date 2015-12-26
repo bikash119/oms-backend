@@ -159,7 +159,13 @@ public class EditCustomer extends EditContentPanel
 		Customer customer = new Customer();
 		customer.setName(txtName.getText());
 		customer.setPhoneNumber1(txtPhone1.getText());
-		customer.setCurrentCredit(Double.parseDouble(txtCreditLimit.getText()));
+		if(txtCurrentCredit.getText() != null && !txtCurrentCredit.getText().isEmpty()){
+			customer.setCurrentCredit(Double.parseDouble(txtCurrentCredit.getText()));
+		}else{
+			customer.setCurrentCredit(Double.parseDouble(txtCreditLimit.getText()));
+		}
+		customer.setCreditLimit(Double.parseDouble(txtCreditLimit.getText()));
+		customer.setAddress(txtAddress.getText());
 		if(txtCode.getText() != null && !txtCode.getText().isEmpty()){
 			customer.setId(Long.parseLong(txtCode.getText()));
 		}

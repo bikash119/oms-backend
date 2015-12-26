@@ -217,7 +217,7 @@ public class EditSalesOrder extends EditContentPanel {
 		SalesOrder order = (SalesOrder) o;
 		Set<OrderLine> lineItems = order.getLineItems();
 		if (lineItems != null && !lineItems.isEmpty()) {
-
+			defaultTableModel.setRowCount(0);
 			for (OrderLine orderLine : lineItems) {
 				String productCode = String.valueOf(orderLine.getProduct().getId());
 				int productQuantity = orderLine.getProductQuantity();
