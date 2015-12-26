@@ -53,7 +53,7 @@ public class Services {
 		SalesOrder salesOrder = (SalesOrder) obj;
 		try {
 			if (salesOrder.getId() != null) {
-				orderService.update(salesOrder, salesOrder.getId());
+				salesOrder = orderService.update(salesOrder, salesOrder.getId());
 			} else {
 				salesOrder = orderService.create(salesOrder);
 			}

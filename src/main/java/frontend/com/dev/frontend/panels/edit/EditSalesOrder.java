@@ -38,7 +38,7 @@ public class EditSalesOrder extends EditContentPanel {
 	private JButton btnAddLine = new JButton("Add");
 	private JComboBox<ComboBoxItem> txtProduct = new JComboBox<ComboBoxItem>();
 	private DefaultTableModel defaultTableModel = new DefaultTableModel(
-			new String[] { "Product", "Qty", "Price", "Total" }, 0) {
+			new String[] { "LineItemId","Product", "Qty", "Price", "Total" }, 0) {
 
 		private static final long serialVersionUID = 7058518092777538239L;
 
@@ -202,7 +202,7 @@ public class EditSalesOrder extends EditContentPanel {
 			return;
 		}
 		double totalPrice = qty * price;
-		defaultTableModel.addRow(new String[] { productCode, "" + qty, "" + price, "" + totalPrice });
+		defaultTableModel.addRow(new String[] { "", "" +productCode, "" + qty, "" + price, "" + totalPrice });
 		double currentValue = Utils.parseDouble(txtTotalPrice.getText());
 		currentValue += totalPrice;
 		txtTotalPrice.setText("" + currentValue);
@@ -222,11 +222,12 @@ public class EditSalesOrder extends EditContentPanel {
 				String productCode = String.valueOf(orderLine.getProduct().getId());
 				int productQuantity = orderLine.getProductQuantity();
 				double productPrice = orderLine.getProductPrice();
+				String lineItemId = String.valueOf(orderLine.getId());
 				double totalPrice = productQuantity * productPrice;
 				String productQuantityStr = String.valueOf(productQuantity);
 				String productPriceStr = String.valueOf(productPrice);
 				String totalPriceStr = String.valueOf(totalPrice);
-				defaultTableModel.addRow(new String[] { productCode, "" + productQuantityStr, "" + productPriceStr,
+				defaultTableModel.addRow(new String[] { lineItemId, "" +productCode, "" + productQuantityStr, "" + productPriceStr,
 						"" + totalPriceStr });
 			}
 		}
@@ -259,14 +260,16 @@ public class EditSalesOrder extends EditContentPanel {
 		Set<OrderLine> lineItems = new HashSet<OrderLine>();
 		int rowCount = defaultTableModel.getRowCount();
 		for (int i = 0; i < rowCount; i++) {
-			OrderLine orderLine = new OrderLine();
-			orderLine.setOrder(order);
-			String productId = (String) defaultTableModel.getValueAt(i, 0);
-			Product product = (Product) Services.readRecordByCode(productId, Services.TYPE_PRODUCT);
-			orderLine.setProduct(product);
-			orderLine.setProductPrice(product.getPrice());
-			orderLine.setProductQuantity(Integer.parseInt(defaultTableModel.getValueAt(i, 1).toString()));
-			lineItems.add(orderLine);
+			if(defaultTableModel.getValueAt(i, 0).toString().isEmpty()){
+				OrderLine orderLine = new OrderLine();
+				orderLine.setOrder(order);
+				String productId = (String) defaultTableModel.getValueAt(i, 1);
+				Product product = (Product) Services.readRecordByCode(productId, Services.TYPE_PRODUCT);
+				orderLine.setProduct(product);
+				orderLine.setProductPrice(product.getPrice());
+				orderLine.setProductQuantity(Integer.parseInt(defaultTableModel.getValueAt(i, 2).toString()));
+				lineItems.add(orderLine);
+			}
 		}
 		return lineItems;
 	}

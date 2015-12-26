@@ -142,9 +142,12 @@ public class SalesOrderController extends DefaultController {
 		for (OrderLine orderLine : lineItems) {
 			long availableQuantity = orderLine.getProduct().getQuantity();
 			int requestedQuantity = orderLine.getProductQuantity();
-			if(availableQuantity < requestedQuantity){
-				isInventorySufficient = false;
-				return isInventorySufficient;
+			if(orderLine.getId() == null){
+				if(availableQuantity < requestedQuantity){
+					isInventorySufficient = false;
+					return isInventorySufficient;
+				}
+				
 			}
 		}
 		return isInventorySufficient;
@@ -154,8 +157,44 @@ public class SalesOrderController extends DefaultController {
 	public @ResponseBody SalesOrder updateSalesOrder(@RequestBody SalesOrder salesOrder,@PathVariable("id") long id){
 		logger.info("update sales order");
 		SalesOrderDAO salesOrderDao = getSalesOrderDao();
-		SalesOrder updatedSalesOrder = salesOrderDao.update(id, salesOrder);
-		return updatedSalesOrder;
+		SalesOrder order = null;
+		Set<OrderLine> lineItems = salesOrder.getLineItems();
+		try {
+			
+			boolean isValidTx = performBusinessValidation(salesOrder);
+			boolean isInventorySufficient = performInventoryCheck(salesOrder);
+			if(isValidTx && isInventorySufficient){
+				order =  salesOrderDao.update(id, salesOrder);
+				for (OrderLine orderLine : lineItems) {
+					OrderLineDAO lineItemDao = getLineItemDao();
+					orderLine.setOrder(order);
+					if(orderLine.getId() == null)
+						lineItemDao.save(orderLine);
+				}
+				updateCustomerCurrentCredit(salesOrder);
+				updateProductInventory(salesOrder);
+				order = salesOrderDao.fetchById(id);
+			}else if(!isValidTx){
+				try {
+					throw new BusinessValidationException("Credit limit reached. No more purchase allowed");
+				} catch (BusinessValidationException e) {
+					e.printStackTrace();
+					throw new RestClientException(e.getMessage(),e.getCause());
+				}
+			}else if(!isInventorySufficient){
+				try {
+					throw new BusinessValidationException("Insufficient Inventory");
+				} catch (BusinessValidationException e) {
+					e.printStackTrace();
+					throw new RestClientException(e.getMessage(),e.getCause());
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RestClientException(e.getMessage(),e.getCause());
+		}
+	
+		return order;
 	}
 	
 	@RequestMapping(value= SalesOrderRestURIConstants.DELETLE_SALES,method= RequestMethod.DELETE)
