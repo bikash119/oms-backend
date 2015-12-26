@@ -1,6 +1,10 @@
-drop database if exists order_mgmt
-create database order_mgmt
-use order_mgmt
+drop database if exists order_mgmt;
+create database order_mgmt;
+create user 'oms-user'@'localhost' identified by 'oms-user';
+grant all privileges on 'oms-user'.* to 'oms-user'@'localhost';
+FLUSH PRIVILEGES;
+
+use order_mgmt;
 --drop table scripts
 drop table if exists OrderLine;
 drop table if exists SalesOrder;
