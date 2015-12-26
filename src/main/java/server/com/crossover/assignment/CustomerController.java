@@ -84,6 +84,10 @@ public class CustomerController extends DefaultController{
 	public @ResponseBody Customer updateCustomer(@RequestBody Customer customer,@PathVariable("id") long id){
 		logger.info("update customer : "+id);
 		CustomerDAO customerDao = getCustomerDao();
+		Customer dbCustomer = customerDao.fetchById(String.valueOf(id));
+		if(dbCustomer.getCreditLimit() != customer.getCreditLimit()){
+			customer.setCurrentCredit(customer.getCreditLimit());
+		}
 		Customer updatedCustomer = customerDao.update(id, customer);
 		return updatedCustomer;
 	}

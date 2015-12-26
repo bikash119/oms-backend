@@ -114,7 +114,6 @@ public class EditCustomer extends EditContentPanel
 		gbc.anchor = GridBagConstraints.LAST_LINE_START;
 		add(txtCreditLimit, gbc);
 		txtCreditLimit.setColumns(10);
-
 		gbc = new GridBagConstraints();
 		gbc.insets = new Insets(5, 5, 5, 5);
 		gbc.gridx = 2;
