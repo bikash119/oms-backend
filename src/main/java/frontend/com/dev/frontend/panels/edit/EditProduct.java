@@ -83,9 +83,14 @@ public class EditProduct extends EditContentPanel
 	public boolean bindToGUI(Object o) 
 	{
 		// TODO by the candidate
-		/*
+		/* Bikash :- IMPL done
 		 * This method use the object returned by Services.readRecordByCode and should map it to screen widgets 
 		 */
+		Product product = (Product)o;
+		txtCode.setText(String.valueOf(product.getId()));
+		txtDescription.setText(product.getDesc());
+		txtPrice.setText(String.valueOf(product.getPrice()));
+		txtQuantity.setText(String.valueOf(product.getQuantity()));
 		return false;
 	}
 

@@ -225,6 +225,24 @@ public class EditSalesOrder extends EditContentPanel
 		/*
 		 * This method use the object returned by Services.readRecordByCode and should map it to screen widgets 
 		 */
+		SalesOrder order = (SalesOrder)o;
+		Set<OrderLine> lineItems = order.getLineItems();
+		if(lineItems != null && !lineItems.isEmpty()){
+			
+			for (OrderLine orderLine : lineItems) {
+				String productCode = String.valueOf(orderLine.getProduct().getId());
+				int productQuantity = orderLine.getProductQuantity();
+				double productPrice = orderLine.getProductPrice();
+				double totalPrice = productQuantity * productPrice;
+				String productQuantityStr = String.valueOf(productQuantity);
+				String productPriceStr = String.valueOf(productPrice);
+				String totalPriceStr = String.valueOf(totalPrice);
+				defaultTableModel.addRow(new String[]{productCode, "" +productQuantityStr,"" + productPriceStr,"" + totalPriceStr});
+			}
+		}
+		txtOrderNum.setText(String.valueOf(order.getId()));
+		txtCustomer.setSelectedItem(order.getCustomer().getId());
+		txtTotalPrice.setText(String.valueOf(order.getTotalPrice()));
 		return false;
 	}
 
@@ -242,7 +260,6 @@ public class EditSalesOrder extends EditContentPanel
 		order.setLineItems(createLineItems(defaultTableModel,order));
 		return order;
 	}
-
 	private Set<OrderLine> createLineItems(DefaultTableModel defaultTableModel, SalesOrder order) {
 		Set<OrderLine> lineItems = new HashSet<OrderLine>();
 		int rowCount = defaultTableModel.getRowCount();

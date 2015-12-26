@@ -3,18 +3,25 @@
  */
 package com.dev.frontend.services.operation;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import com.crossover.assignment.model.Customer;
+import com.crossover.assignment.model.OrderLine;
 import com.crossover.assignment.model.SalesOrder;
 import com.crossover.assignment.service.url.SalesOrderRestURIConstants;
 import com.dev.frontend.services.operation.exception.SalesOrderCRUDServiceException;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author bikash
@@ -35,14 +42,27 @@ public class SalesOrderCRUDService implements CRUDService<SalesOrder, SalesOrder
 			for (LinkedHashMap map : response) {
 				SalesOrder order = new SalesOrder();
 				order.setId(Long.parseLong(map.get("id").toString()));
-				order.setTotalPrice(Integer.parseInt(map.get("totalPrice").toString()));
+				order.setTotalPrice(Double.parseDouble(map.get("totalPrice").toString()));
+				order.setLineItems(createLineItems(map.get("lineItems")));
+				order.setCustomer(prepareCustomer(map.get("customer")));
 				orders.add(order);
 			}
-
 		} catch (RestClientException e) {
 			throw new SalesOrderCRUDServiceException(e.getCause());
 		}
 		return orders;
+	}
+
+	private Customer prepareCustomer(Object object) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		Customer customer = objectMapper.convertValue(object, Customer.class);
+		return customer;
+	}
+
+	private Set<OrderLine> createLineItems(Object object) {
+		ObjectMapper mapper = new ObjectMapper();
+		Set<OrderLine> lineItems = mapper.convertValue(object, Set.class);
+		return lineItems;
 	}
 
 	@Override

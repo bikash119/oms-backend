@@ -18,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+
 /**
  * @author bikash
  *
@@ -36,14 +38,14 @@ public class SalesOrder implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(columnDefinition="customer" , referencedColumnName="id" ,name="customerId")
 	private Customer customer;
 
 	@Column(name = "totalPrice", nullable = false)
 	private double totalPrice;
 
-	@OneToMany(mappedBy="order",fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="order",fetch = FetchType.EAGER)
 	private Set<OrderLine> lineItems = new HashSet<OrderLine>();
 
 	public Customer getCustomer() {
