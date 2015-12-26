@@ -80,7 +80,7 @@ public class ProductDAOImpl extends AbstractBusinessDAO implements ProductDAO {
 	 * @see com.crossover.assignment.dao.ProductDAO#delete(java.lang.String)
 	 */
 	@Override
-	public boolean delete(String id) {
+	public boolean delete(long id) {
 		try {
 			beginTransacation();
 			Session session = this.getSession();
@@ -101,10 +101,10 @@ public class ProductDAOImpl extends AbstractBusinessDAO implements ProductDAO {
 	 * @see com.crossover.assignment.dao.ProductDAO#update(java.lang.String, com.crossover.assignment.model.Product)
 	 */
 	@Override
-	public Product update(String id, Product product) {
+	public Product update(long id, Product product) {
 		try {
 			beginTransacation();
-			this.getSession().update(id, product);
+			this.getSession().update(String.valueOf(id), product);
 			return product;
 		} catch (Exception e) {
 			e.printStackTrace();

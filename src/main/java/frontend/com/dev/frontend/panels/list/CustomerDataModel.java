@@ -30,7 +30,6 @@ public class CustomerDataModel extends ListDataModel
 		 */
 		List<Object> records = Services.listCurrentRecords(Services.TYPE_CUSTOMER);
 		
-		//String[][] sampleData = new String [][]{{"01","Customer 1","+201011121314","23.4"},{"02","Customer 2","+201112131415","1.4"}};
 		String[][] customers = prepareRows(records);
 		return customers;
 	}

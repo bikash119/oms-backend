@@ -3,7 +3,6 @@
  */
 package com.crossover.assignment.dao.impl;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -33,7 +32,7 @@ public class CustomerDAOImpl extends AbstractBusinessDAO implements CustomerDAO 
 	public Customer save(Customer customer) {
 		try {
 			beginTransacation();
-			Serializable savedCustomer = this.getSession().save(customer);
+			this.getSession().save(customer);
 			return customer;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -70,6 +69,7 @@ public class CustomerDAOImpl extends AbstractBusinessDAO implements CustomerDAO 
 	 * 
 	 * @see com.crossover.assignment.dao.CustomerDAO#fetchById(java.lang.String)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public Customer fetchById(String id) {
 		try {
@@ -95,7 +95,7 @@ public class CustomerDAOImpl extends AbstractBusinessDAO implements CustomerDAO 
 	 * @see com.crossover.assignment.dao.CustomerDAO#delete(java.lang.String)
 	 */
 	@Override
-	public boolean delete(String id) {
+	public boolean delete(long id) {
 		try {
 			beginTransacation();
 			Session session = this.getSession();
@@ -119,10 +119,10 @@ public class CustomerDAOImpl extends AbstractBusinessDAO implements CustomerDAO 
 	 * com.crossover.assignment.model.Customer)
 	 */
 	@Override
-	public Customer update(String id, Customer customer) {
+	public Customer update(long id, Customer customer) {
 		try {
 			beginTransacation();
-			this.getSession().update(id, customer);
+			this.getSession().update(String.valueOf(id), customer);
 			return customer;
 		} catch (Exception e) {
 			e.printStackTrace();

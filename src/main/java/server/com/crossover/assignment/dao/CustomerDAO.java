@@ -19,8 +19,8 @@ public interface CustomerDAO {
 	
 	public Customer fetchById(String id);
 	
-	public boolean delete(String id);
+	public boolean delete(long id);
 	
-	public Customer update(String id,Customer customer);
+	public Customer update(long id,Customer customer);
 
 }

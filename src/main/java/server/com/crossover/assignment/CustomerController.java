@@ -83,7 +83,7 @@ public class CustomerController extends DefaultController{
 	}
 	
 	@RequestMapping(value=CustomerRestURIConstants.UPDATE_CUSTOMER,method=RequestMethod.POST)
-	public @ResponseBody Customer updateCustomer(@RequestBody Customer customer,@PathVariable("id") String id){
+	public @ResponseBody Customer updateCustomer(@RequestBody Customer customer,@PathVariable("id") long id){
 		logger.info("update customer : "+id);
 		CustomerDAO customerDao = getCustomerDao();
 		Customer updatedCustomer = customerDao.update(id, customer);
@@ -91,7 +91,7 @@ public class CustomerController extends DefaultController{
 	}
 	
 	@RequestMapping(value=CustomerRestURIConstants.DELETLE_CUSTOMER,method=RequestMethod.DELETE)
-	public @ResponseBody void deleteCustomerById(@PathVariable("id") String id){
+	public @ResponseBody void deleteCustomerById(@PathVariable("id") long id){
 		try {
 			CustomerDAO customerDao = getCustomerDao();
 			customerDao.delete(id);

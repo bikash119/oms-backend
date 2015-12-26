@@ -19,9 +19,9 @@ public interface OrderLineDAO {
 	
 	public OrderLine fetchById(String id);
 	
-	public boolean delete(String id);
+	public boolean delete(long id);
 	
-	public OrderLine update(String id,OrderLine orderLine);
+	public OrderLine update(long id,OrderLine orderLine);
 
 
 

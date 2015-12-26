@@ -59,14 +59,14 @@ public class ProductController extends DefaultController {
 	}
 	
 	@RequestMapping(value=ProductRestURIConstants.UPDATE_PRODUCT,method=RequestMethod.POST)
-	public @ResponseBody Product updateProduct(@RequestBody Product product,@PathVariable("id") String id){
+	public @ResponseBody Product updateProduct(@RequestBody Product product,@PathVariable("id") long id){
 		logger.info("update product");
 		ProductDAO productDAO = getProductDAO();
 		return productDAO.update(id, product);
 	}
 	
 	@RequestMapping(value=ProductRestURIConstants.DELETLE_PRODUCT,method=RequestMethod.DELETE)
-	public @ResponseBody void deleteProductById(@PathVariable("id") String id){
+	public @ResponseBody void deleteProductById(@PathVariable("id") long id){
 		ProductDAO productDAO = getProductDAO();
 		productDAO.delete(id);
 	}

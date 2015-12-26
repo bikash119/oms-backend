@@ -81,7 +81,7 @@ public class OrderLineDAOImpl extends AbstractBusinessDAO implements OrderLineDA
 	 * @see com.crossover.assignment.dao.OrderLineDAO#delete(java.lang.String)
 	 */
 	@Override
-	public boolean delete(String id) {
+	public boolean delete(long id) {
 		try {
 			beginTransacation();
 			Session session = this.getSession();
@@ -102,10 +102,10 @@ public class OrderLineDAOImpl extends AbstractBusinessDAO implements OrderLineDA
 	 * @see com.crossover.assignment.dao.OrderLineDAO#update(java.lang.String, com.crossover.assignment.model.OrderLine)
 	 */
 	@Override
-	public OrderLine update(String id, OrderLine orderLine) {
+	public OrderLine update(long id, OrderLine orderLine) {
 		try {
 			beginTransacation();
-			this.getSession().update(id, orderLine);
+			this.getSession().update(String.valueOf(id), orderLine);
 			return orderLine;
 		} catch (Exception e) {
 			e.printStackTrace();

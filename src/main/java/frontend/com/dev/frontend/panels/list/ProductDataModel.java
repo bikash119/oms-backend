@@ -29,7 +29,6 @@ public class ProductDataModel extends ListDataModel
 		 * each row is another array of columns of the row
 		 */
 		List<Object> records = Services.listCurrentRecords(Services.TYPE_PRODUCT);
-		//String[][] sampleData = new String [][]{{"01","Product 1","12.5","25"},{"02","Product 2","10","8"}};
 		String[][] products = prepareRows(records);
 		return products;
 	}

@@ -20,8 +20,8 @@ public interface SalesOrderDAO {
 	
 	public SalesOrder fetchById(String id);
 	
-	public boolean delete(String id);
+	public boolean delete(long id);
 	
-	public SalesOrder update(String id,SalesOrder salesOrder);
+	public SalesOrder update(long id,SalesOrder salesOrder);
 
 }

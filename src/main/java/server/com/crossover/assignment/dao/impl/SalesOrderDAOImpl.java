@@ -78,7 +78,7 @@ public class SalesOrderDAOImpl extends AbstractBusinessDAO implements SalesOrder
 	 * @see com.crossover.assignment.dao.SalesOrderDAO#delete(java.lang.String)
 	 */
 	@Override
-	public boolean delete(String id) {
+	public boolean delete(long id) {
 		try {
 			beginTransacation();
 			Session session = this.getSession();
@@ -99,10 +99,10 @@ public class SalesOrderDAOImpl extends AbstractBusinessDAO implements SalesOrder
 	 * @see com.crossover.assignment.dao.SalesOrderDAO#update(java.lang.String, com.crossover.assignment.model.SalesOrder)
 	 */
 	@Override
-	public SalesOrder update(String id, SalesOrder salesOrder) {
+	public SalesOrder update(long id, SalesOrder salesOrder) {
 		try {
 			beginTransacation();
-			this.getSession().update(id,salesOrder);
+			this.getSession().update(String.valueOf(id),salesOrder);
 			return salesOrder;
 		} catch (Exception e) {
 			e.printStackTrace();

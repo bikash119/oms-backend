@@ -11,11 +11,9 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.crossover.assignment.model.OrderLine;
-import com.crossover.assignment.model.Product;
 import com.crossover.assignment.service.url.OrderLineItemsRestURIConstants;
 import com.crossover.assignment.service.url.ProductRestURIConstants;
 import com.dev.frontend.services.operation.exception.OrderLineCRUDServiceException;
-import com.dev.frontend.services.operation.exception.ProductCRUDServiceException;
 
 /**
  * @author bikash

@@ -17,8 +17,8 @@ public interface ProductDAO {
 	
 	public Product fetchById(long id);
 	
-	public boolean delete(String id);
+	public boolean delete(long id);
 	
-	public Product update(String id,Product product);
+	public Product update(long id,Product product);
 
 }

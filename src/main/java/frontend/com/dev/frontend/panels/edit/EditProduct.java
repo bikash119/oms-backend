@@ -10,16 +10,14 @@ import javax.swing.JTextField;
 import com.crossover.assignment.model.Product;
 import com.dev.frontend.services.Services;
 
-public class EditProduct extends EditContentPanel
-{
+public class EditProduct extends EditContentPanel {
 	private static final long serialVersionUID = -8971249970444644844L;
 	private JTextField txtCode = new JTextField();
 	private JTextField txtDescription = new JTextField();
 	private JTextField txtQuantity = new JTextField();
 	private JTextField txtPrice = new JTextField();
 
-	public EditProduct()
-	{
+	public EditProduct() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		setLayout(gridBagLayout);
 
@@ -80,13 +78,13 @@ public class EditProduct extends EditContentPanel
 		txtQuantity.setColumns(10);
 	}
 
-	public boolean bindToGUI(Object o) 
-	{
+	public boolean bindToGUI(Object o) {
 		// TODO by the candidate
-		/* Bikash :- IMPL done
-		 * This method use the object returned by Services.readRecordByCode and should map it to screen widgets 
+		/*
+		 * Bikash :- IMPL done This method use the object returned by
+		 * Services.readRecordByCode and should map it to screen widgets
 		 */
-		Product product = (Product)o;
+		Product product = (Product) o;
 		txtCode.setText(String.valueOf(product.getId()));
 		txtDescription.setText(product.getDesc());
 		txtPrice.setText(String.valueOf(product.getPrice()));
@@ -94,42 +92,41 @@ public class EditProduct extends EditContentPanel
 		return false;
 	}
 
-	public Object guiToObject() 
-	{
+	public Object guiToObject() {
 		// TODO by the candidate
-		/* Bikash :- IMPL done
-		 * This method collect values from screen widgets and convert them to object of your type
-		 * This object will be used as a parameter of method Services.save
+		/*
+		 * Bikash :- IMPL done This method collect values from screen widgets
+		 * and convert them to object of your type This object will be used as a
+		 * parameter of method Services.save
 		 */
-		
+
 		Product product = new Product();
 		product.setDesc(txtDescription.getText());
 		product.setQuantity(Long.parseLong(txtQuantity.getText()));
 		product.setPrice(Float.parseFloat(txtPrice.getText()));
+		if (txtCode.getText() != null && !txtCode.getText().isEmpty()) {
+			product.setId(Long.parseLong(txtCode.getText()));
+		}
 		return product;
 	}
 
-	public int getObjectType()
-	{
+	public int getObjectType() {
 		return Services.TYPE_PRODUCT;
 	}
 
 	@Override
-	public String getCurrentCode()
-	{
+	public String getCurrentCode() {
 		return txtCode.getText();
 	}
 
-	public void clear()
-	{
+	public void clear() {
 		txtCode.setText("");
 		txtDescription.setText("");
 		txtPrice.setText("");
 		txtQuantity.setText("");
 	}
 
-	public void onInit()
-	{
+	public void onInit() {
 
 	}
 }

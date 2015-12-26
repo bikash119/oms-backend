@@ -17,9 +17,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import com.dev.frontend.panels.BusinessPresenter;
-import com.dev.frontend.panels.PanelSwitcher;
 import com.dev.frontend.panels.HasBusinessPresenter;
 import com.dev.frontend.panels.MenuPanel;
+import com.dev.frontend.panels.PanelSwitcher;
 import com.dev.frontend.panels.edit.EditContainer;
 import com.dev.frontend.panels.edit.EditCustomer;
 import com.dev.frontend.panels.edit.EditProduct;
@@ -67,8 +67,10 @@ public class ListContentPanel extends JPanel implements HasBusinessPresenter {
 
 					public void valueChanged(ListSelectionEvent e) {
 						if (!e.getValueIsAdjusting())
-							goToRecord(table.getValueAt(table.getSelectedRow(),
-									0).toString());
+							if(table.getSelectedRow() > -1){
+								goToRecord(table.getValueAt(table.getSelectedRow(),
+										0).toString());
+							}
 					}
 				});
 		JScrollPane scrollPane = new JScrollPane(table);

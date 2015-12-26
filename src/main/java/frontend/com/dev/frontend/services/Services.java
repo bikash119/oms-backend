@@ -145,7 +145,7 @@ public class Services {
 			break;
 		}
 
-		return true;
+		return isDeleted;
 	}
 
 	private static boolean deleteSalesOrderById(String salesOrderId) {

@@ -135,7 +135,7 @@ public class EditCustomer extends EditContentPanel
 	public boolean bindToGUI(Object o) 
 	{
 		// TODO by the candidate
-		/*
+		/* Bikash :- IMPL done
 		 * This method use the object returned by Services.readRecordByCode and should map it to screen widgets 
 		 */
 		Customer customer = (Customer)o;
@@ -160,6 +160,9 @@ public class EditCustomer extends EditContentPanel
 		customer.setName(txtName.getText());
 		customer.setPhoneNumber1(txtPhone1.getText());
 		customer.setCurrentCredit(Double.parseDouble(txtCreditLimit.getText()));
+		if(txtCode.getText() != null && !txtCode.getText().isEmpty()){
+			customer.setId(Long.parseLong(txtCode.getText()));
+		}
 		return customer;
 	}
 

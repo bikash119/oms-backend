@@ -12,9 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
 import com.dev.frontend.panels.BusinessPresenter;
-import com.dev.frontend.panels.PanelSwitcher;
 import com.dev.frontend.panels.HasBusinessPresenter;
 import com.dev.frontend.panels.MenuPanel;
+import com.dev.frontend.panels.PanelSwitcher;
 import com.dev.frontend.services.Services;
 
 public class EditContainer extends JPanel implements ActionListener,HasBusinessPresenter {
