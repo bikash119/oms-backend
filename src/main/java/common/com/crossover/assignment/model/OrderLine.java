@@ -7,13 +7,14 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author bikash
@@ -33,29 +34,22 @@ public class OrderLine implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name="product", nullable=false)
+	@ManyToOne
+	@JoinColumn(columnDefinition="product" , referencedColumnName="id" ,name="productId")
 	private Product product;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="salesOrderId")
+	@ManyToOne
+	@JoinColumn(columnDefinition="order" , referencedColumnName="id" ,name="salesOrderId")
 	private SalesOrder order;
 	
-	@Column(name="quantity",nullable=false)
+	@Column(name="productQuantity",nullable=false)
 	private int productQuantity;
 	
 	@Column(name="price",nullable=false)
 	private double productPrice;
 
-	public Product getProduct() {
-		return product;
-	}
-
 	public void setProduct(Product product) {
 		this.product = product;
-	}
-
-	public SalesOrder getOrder() {
-		return order;
 	}
 
 	public void setOrder(SalesOrder order) {
@@ -78,12 +72,17 @@ public class OrderLine implements Serializable{
 		this.productPrice = productPrice;
 	}
 
+	@JsonIgnore
 	public long getId() {
 		return id;
 	}
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public Product getProduct() {
+		return product;
 	}
 
 }

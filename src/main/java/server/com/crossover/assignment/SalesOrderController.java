@@ -4,6 +4,7 @@
 package com.crossover.assignment;
 
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.crossover.assignment.dao.OrderLineDAO;
 import com.crossover.assignment.dao.SalesOrderDAO;
+import com.crossover.assignment.model.OrderLine;
 import com.crossover.assignment.model.SalesOrder;
 import com.crossover.assignment.service.url.SalesOrderRestURIConstants;
 
@@ -55,10 +58,17 @@ public class SalesOrderController extends DefaultController {
 	public @ResponseBody SalesOrder createSalesOrder(@RequestBody SalesOrder salesOrder){
 		logger.info("create sales order");
 		SalesOrderDAO salesOrderDao = getSalesOrderDao();
+		Set<OrderLine> lineItems = salesOrder.getLineItems();
 		SalesOrder order = salesOrderDao.save(salesOrder);
+		for (OrderLine orderLine : lineItems) {
+			OrderLineDAO lineItemDao = getLineItemDao();
+			orderLine.setOrder(order);
+			lineItemDao.save(orderLine);
+		}
 		return order;
 	}
 	
+
 	@RequestMapping(value=SalesOrderRestURIConstants.UPDATE_SALES,method=RequestMethod.POST)
 	public @ResponseBody SalesOrder updateSalesOrder(@RequestBody SalesOrder salesOrder,@PathVariable("id") String id){
 		logger.info("update sales order");
@@ -74,8 +84,12 @@ public class SalesOrderController extends DefaultController {
 	}
 	
 	private SalesOrderDAO getSalesOrderDao(){
-		SalesOrderDAO salesOrderDAO = this.context.getBean(SalesOrderDAO.class);
+		SalesOrderDAO salesOrderDAO = context.getBean(SalesOrderDAO.class);
 		return salesOrderDAO;
+	}
+	private OrderLineDAO getLineItemDao() {
+		OrderLineDAO orderLineDao = context.getBean(OrderLineDAO.class);
+		return orderLineDao;
 	}
 	
 }

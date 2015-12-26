@@ -4,13 +4,17 @@
 package com.crossover.assignment.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
 
 /**
  * @author bikash
@@ -38,6 +42,10 @@ public class Product implements Serializable{
 	
 	@Column(name="quantity",nullable=false)
 	private long quantity;
+	
+	 @OneToMany(mappedBy="product")
+	 @Cascade(value=org.hibernate.annotations.CascadeType.ALL)
+	 private List<OrderLine> orderLineItems;
 
 	public String getDesc() {
 		return desc;

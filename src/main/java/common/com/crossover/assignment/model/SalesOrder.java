@@ -16,11 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Cascade;
 
 /**
  * @author bikash
@@ -47,7 +43,7 @@ public class SalesOrder implements Serializable {
 	@Column(name = "totalPrice", nullable = false)
 	private double totalPrice;
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="order",fetch = FetchType.LAZY)
 	private Set<OrderLine> lineItems = new HashSet<OrderLine>();
 
 	public Customer getCustomer() {

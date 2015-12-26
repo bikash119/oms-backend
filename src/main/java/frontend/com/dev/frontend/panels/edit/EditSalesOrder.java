@@ -219,6 +219,7 @@ public class EditSalesOrder extends EditContentPanel
 		txtTotalPrice.setText("" + currentValue);
 	}
 	
+
 	public boolean bindToGUI(Object o) {
 		// TODO by the candidate
 		/*
